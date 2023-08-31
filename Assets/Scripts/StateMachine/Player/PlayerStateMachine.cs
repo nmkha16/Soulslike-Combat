@@ -16,9 +16,13 @@ public class PlayerStateMachine : StateMachine
     public Animator animator {get; private set;}
     public CharacterController characterController {get; private set;}
 
-    // cinemachine
-    private float cinemachineTargetYaw;
-    private float cinemachineTargetPitch;
+    [Header("Attack Animation Clips")]
+    public List<AnimationClip> animationClips;
+
+    // TODO: Allow 3rd camera rotation
+    // // cinemachine
+    // private float cinemachineTargetYaw;
+    // private float cinemachineTargetPitch;
 
     private void Start(){
         mainCamera = Camera.main.transform;

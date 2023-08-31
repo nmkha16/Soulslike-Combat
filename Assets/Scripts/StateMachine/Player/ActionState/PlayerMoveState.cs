@@ -17,6 +17,7 @@ public class PlayerMoveState : PlayerBaseState
         playerStateMachine.velocity.y = Physics.gravity.y;
         playerStateMachine.animator.CrossFadeInFixedTime(moveBlendTreeHash,crossFadeDuration);
         playerStateMachine.inputReader.OnJumpPerformed += SwitchToJumpState;
+        playerStateMachine.inputReader.OnAttackPerformed += SwitchToAttack1State;
     }
 
     public override void Tick()
@@ -33,9 +34,14 @@ public class PlayerMoveState : PlayerBaseState
     public override void Exit()
     {
         playerStateMachine.inputReader.OnJumpPerformed -= SwitchToJumpState;
+        playerStateMachine.inputReader.OnAttackPerformed -= SwitchToAttack1State;
     }
 
     private void SwitchToJumpState(){
         playerStateMachine.SwitchState(new PlayerJumpState(playerStateMachine));
+    }
+
+    private void SwitchToAttack1State(){
+        playerStateMachine.SwitchState(new PlayerAttack1State(playerStateMachine));
     }
 }

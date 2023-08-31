@@ -4,8 +4,8 @@ using UnityEngine;
 
 public abstract class PlayerBaseState : State
 {
+    protected readonly int animMultiplier = Animator.StringToHash("AnimMultiplier");
     protected readonly PlayerStateMachine playerStateMachine;
-
     protected PlayerBaseState(PlayerStateMachine playerStateMachine){
         this.playerStateMachine = playerStateMachine;
     }
