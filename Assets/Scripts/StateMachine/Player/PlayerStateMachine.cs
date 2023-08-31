@@ -16,6 +16,9 @@ public class PlayerStateMachine : StateMachine
     public Animator animator {get; private set;}
     public CharacterController characterController {get; private set;}
 
+    // cinemachine
+    private float cinemachineTargetYaw;
+    private float cinemachineTargetPitch;
 
     private void Start(){
         mainCamera = Camera.main.transform;
