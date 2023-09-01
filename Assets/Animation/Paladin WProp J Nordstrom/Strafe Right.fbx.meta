@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ee12ba41eba960b48b4a49243f9aa706
+guid: 630af7bfa9387e74e9c34d5618ae7a55
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
@@ -33,11 +33,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Jump
+      name: Strafe Right
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 50
+      lastFrame: 42
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
