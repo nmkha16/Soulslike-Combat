@@ -7,9 +7,10 @@ public class PlayerAttack2State : PlayerBaseState
     private readonly int attack2Hash = Animator.StringToHash("Slash2");
     private const float crossFadeDuration = .25f;
     private AttackSequence attackSequence = AttackSequence.Attack2;
-    private float easingCurve = 0.25f;
+    private float easingCurve = 0.45f;
     private float recommendSpeed = 1.45f;
     private float animLength;
+    private AnimationCurve curve;
     private float elapsed = 0f;
     private bool shouldEnterNextAttack;    
 
@@ -23,7 +24,8 @@ public class PlayerAttack2State : PlayerBaseState
 
         playerStateMachine.animator.CrossFadeInFixedTime(attack2Hash,crossFadeDuration);
         playerStateMachine.animator.SetFloat(animMultiplier,recommendSpeed);
-        animLength = playerStateMachine.animationClips[(int)attackSequence].length / recommendSpeed;
+        animLength = playerStateMachine.animationClips[(int)attackSequence].anim.length / recommendSpeed;
+        curve = playerStateMachine.animationClips[(int)attackSequence].curve;
     }
 
     public override void Tick()
@@ -31,7 +33,7 @@ public class PlayerAttack2State : PlayerBaseState
         elapsed += Time.deltaTime;
 
         // push player forward on last string of attack
-        CalculateMoveDirection(elapsed, easing: easingCurve);
+        CalculateMoveDirection(elapsed, curve, easing: easingCurve);
         FaceMoveDirection();
         Move();
 

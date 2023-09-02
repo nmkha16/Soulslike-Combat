@@ -21,15 +21,13 @@ public class PlayerStateMachine : StateMachine
     public CharacterController characterController {get; private set;}
 
     [Header("Attack Animation Clips")]
-    public List<AnimationClip> animationClips;
-    [Header("Final Attack Animation Curve")]
-    public AnimationCurve animationCurve;
-
+    public List<AttackAnimation> animationClips;
     [Header("Camera")]
-    public GameObject cinemachineVirtualCamera;
+    private GameObject cinemachineVirtualCamera;
     private float yaw, pitch;
     private const float cameraThreshold = 0.01f;
     public bool isLockedOnTarget => inputReader.isLockedOnTarget;
+    public bool isRunning => inputReader.isRunning;
 
     [Header("Target Layer")]
     public LayerMask targetLayerMask;

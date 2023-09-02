@@ -21,6 +21,7 @@ public class PlayerLockOnState : PlayerBaseState
         playerStateMachine.velocity.y = Physics.gravity.y;
         playerStateMachine.animator.CrossFadeInFixedTime(lockOnMoveBlendTreeHash,crossFadeDuration);
         playerStateMachine.inputReader.OnAttackPerformed += SwitchToAttack1State;
+        playerStateMachine.inputReader.OnHeavyAttackPerformed += SwitchToHeavyAttackState;
         playerStateMachine.inputReader.OnLockedOnPerformed += ValidateLockOnState;
     }
 
@@ -40,6 +41,7 @@ public class PlayerLockOnState : PlayerBaseState
     public override void Exit()
     {
         playerStateMachine.inputReader.OnAttackPerformed -= SwitchToAttack1State;
+        playerStateMachine.inputReader.OnHeavyAttackPerformed -= SwitchToHeavyAttackState;
         playerStateMachine.inputReader.OnLockedOnPerformed -= ValidateLockOnState;
     }
 
@@ -56,6 +58,10 @@ public class PlayerLockOnState : PlayerBaseState
 
     private void SwitchToAttack1State(){
         playerStateMachine.SwitchState(new PlayerAttack1State(playerStateMachine));
+    }
+
+    private void SwitchToHeavyAttackState(){
+        playerStateMachine.SwitchState(new PlayerHeavyAttackState(playerStateMachine));
     }
 
     private void ValidateLockOnState(){

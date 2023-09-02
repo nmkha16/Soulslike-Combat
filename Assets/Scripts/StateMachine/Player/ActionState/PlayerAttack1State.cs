@@ -10,6 +10,7 @@ public class PlayerAttack1State : PlayerBaseState
     private float easingCurve = 0.25f;
     private float recommendSpeed = 1.40f;
     private float animLength;
+    private AnimationCurve curve;
     private float elapsed = 0f;
     private bool shouldEnterNextAttack;
 
@@ -23,7 +24,8 @@ public class PlayerAttack1State : PlayerBaseState
 
         playerStateMachine.animator.CrossFadeInFixedTime(attack1Hash,crossFadeDuration);
         playerStateMachine.animator.SetFloat(animMultiplier,recommendSpeed);
-        animLength = playerStateMachine.animationClips[(int)attackSequence].length / recommendSpeed;
+        animLength = playerStateMachine.animationClips[(int)attackSequence].anim.length / recommendSpeed;
+        curve = playerStateMachine.animationClips[(int)attackSequence].curve;
     }
 
     public override void Tick()
@@ -31,7 +33,7 @@ public class PlayerAttack1State : PlayerBaseState
         elapsed += Time.deltaTime;
 
         // push player forward on last string of attack
-        CalculateMoveDirection(elapsed, easing: easingCurve);
+        CalculateMoveDirection(elapsed, curve, easing: easingCurve);
         FaceMoveDirection();
         Move();
 

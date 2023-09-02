@@ -8,7 +8,7 @@ public class PlayerMoveState : PlayerBaseState
     private readonly int moveBlendTreeHash = Animator.StringToHash("MoveBlendTree");
 
     private const float animationDampTime = 0.1f;
-    private const float crossFadeDuration = 0.1f;
+    private const float crossFadeDuration = 0.2f;
 
     public PlayerMoveState(PlayerStateMachine playerStateMachine) : base(playerStateMachine) { }
 
@@ -18,6 +18,7 @@ public class PlayerMoveState : PlayerBaseState
         playerStateMachine.animator.CrossFadeInFixedTime(moveBlendTreeHash,crossFadeDuration);
         playerStateMachine.inputReader.OnJumpPerformed += SwitchToJumpState;
         playerStateMachine.inputReader.OnAttackPerformed += SwitchToAttack1State;
+        playerStateMachine.inputReader.OnHeavyAttackPerformed += SwitchToHeavyAttackState;
     }
 
     public override void Tick()
@@ -40,6 +41,7 @@ public class PlayerMoveState : PlayerBaseState
     {
         playerStateMachine.inputReader.OnJumpPerformed -= SwitchToJumpState;
         playerStateMachine.inputReader.OnAttackPerformed -= SwitchToAttack1State;
+        playerStateMachine.inputReader.OnHeavyAttackPerformed -= SwitchToHeavyAttackState;
     }
 
     private void SwitchToJumpState(){
@@ -47,6 +49,13 @@ public class PlayerMoveState : PlayerBaseState
     }
 
     private void SwitchToAttack1State(){
-        playerStateMachine.SwitchState(new PlayerAttack1State(playerStateMachine));
+        if (playerStateMachine.isRunning && playerStateMachine.inputReader.moveComposite.sqrMagnitude > 0){
+            playerStateMachine.SwitchState(new PlayerRunningAttackState(playerStateMachine));
+        }
+        else playerStateMachine.SwitchState(new PlayerAttack1State(playerStateMachine));
+    }
+    
+    private void SwitchToHeavyAttackState(){
+        playerStateMachine.SwitchState(new PlayerHeavyAttackState(playerStateMachine));
     }
 }
