@@ -7,10 +7,12 @@ public class PlayerAttack1State : PlayerBaseState
     private readonly int attack1Hash = Animator.StringToHash("Slash1");
     private const float crossFadeDuration = .25f;
     private AttackSequence attackSequence = AttackSequence.Attack1;
-    private float recommendSpeed = 1.25f;
+    private float easingCurve = 0.25f;
+    private float recommendSpeed = 1.40f;
     private float animLength;
     private float elapsed = 0f;
     private bool shouldEnterNextAttack;
+
     public PlayerAttack1State(PlayerStateMachine playerStateMachine) : base(playerStateMachine)
     {
     }
@@ -28,12 +30,21 @@ public class PlayerAttack1State : PlayerBaseState
     {
         elapsed += Time.deltaTime;
 
+        // push player forward on last string of attack
+        CalculateMoveDirection(elapsed, easing: easingCurve);
+        FaceMoveDirection();
+        Move();
+
         if (shouldEnterNextAttack && elapsed > animLength * 0.75f){
             playerStateMachine.SwitchState(new PlayerAttack2State(playerStateMachine));
             return;
         }
 
         if (elapsed > animLength){
+            if (playerStateMachine.inputReader.isLockedOnTarget){
+                playerStateMachine.SwitchState(new PlayerLockOnState(playerStateMachine));
+                return;
+            }
             playerStateMachine.SwitchState(new PlayerMoveState(playerStateMachine));
         }
 

@@ -12,6 +12,9 @@ public class InputReader : MonoBehaviour, Controls.IPlayerActions
     public Vector2 moveComposite;
     public Action OnJumpPerformed;
     public Action OnAttackPerformed;
+    public Action OnLockedOnPerformed;
+    public bool isRunning;
+    public bool isLockedOnTarget;
     private Controls controls;
 
     private void OnEnable() {
@@ -46,5 +49,17 @@ public class InputReader : MonoBehaviour, Controls.IPlayerActions
     {
         if (!context.performed) return;
         OnAttackPerformed?.Invoke();
+    }
+
+    public void OnRunToggle(InputAction.CallbackContext context)
+    {
+        if (!context.performed) return;
+        isRunning = !isRunning;
+    }
+
+    public void OnLockOn(InputAction.CallbackContext context)
+    {
+        if (!context.performed) return;
+        OnLockedOnPerformed?.Invoke();
     }
 }

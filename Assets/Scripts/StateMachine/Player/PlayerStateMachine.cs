@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 
 [RequireComponent(typeof(InputReader))]
@@ -7,30 +9,130 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerStateMachine : StateMachine
 {
+    public static Action<PlayerStateMachine> OnPlayerInitialized;
+    public Action<Transform,bool> OnLockOnTargetActionPerformed;
     public Vector3 velocity;
     public float moveSpeed {get; private set;} = 5f;
     public float jumpForce {get; private set;} = 5f;
     public float lookRotationDampFactor {get; private set;} = 10f;
-    public Transform mainCamera {get; private set;}
+    public Camera mainCamera {get; private set;}
     public InputReader inputReader {get; private set;}
     public Animator animator {get; private set;}
     public CharacterController characterController {get; private set;}
 
     [Header("Attack Animation Clips")]
     public List<AnimationClip> animationClips;
+    [Header("Final Attack Animation Curve")]
+    public AnimationCurve animationCurve;
 
-    // TODO: Allow 3rd camera rotation
-    // // cinemachine
-    // private float cinemachineTargetYaw;
-    // private float cinemachineTargetPitch;
+    [Header("Camera")]
+    public GameObject cinemachineVirtualCamera;
+    private float yaw, pitch;
+    private const float cameraThreshold = 0.01f;
+    public bool isLockedOnTarget => inputReader.isLockedOnTarget;
+
+    [Header("Target Layer")]
+    public LayerMask targetLayerMask;
+    public float targetLockOnRadius = 5f;
+    private Collider[] hitColliders = new Collider[3];
+    public Transform lockOnTarget;
+    
+    public void AssignCamera(GameObject followPlayerCamera){
+        this.cinemachineVirtualCamera = followPlayerCamera;
+    }
 
     private void Start(){
-        mainCamera = Camera.main.transform;
+        yaw = cinemachineVirtualCamera.transform.rotation.eulerAngles.y;
+
+        mainCamera = Camera.main;
 
         inputReader = GetComponent<InputReader>();
         animator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
 
         SwitchState(new PlayerMoveState(this));
+        OnPlayerInitialized?.Invoke(this);
+
+        inputReader.OnLockedOnPerformed += LockOnTarget;
+    }
+
+    private void LateUpdate() {
+        RotateCamera();
+    }
+
+    private void OnDestroy() {
+        inputReader.OnLockedOnPerformed -= LockOnTarget;
+    }
+
+    protected void RotateCamera(){
+        if (isLockedOnTarget){
+            return;
+        }
+
+        if (inputReader.mouseDelta.sqrMagnitude > cameraThreshold && !isLockedOnTarget){
+            yaw += inputReader.mouseDelta.x * Time.deltaTime * 3f;
+            pitch += inputReader.mouseDelta.y * Time.deltaTime;
+        }
+
+        // clamp value on 360 degree
+        yaw = ClampAngle(yaw, float.MinValue, float.MaxValue);
+        pitch = ClampAngle(pitch, -30f, 70f);
+
+        cinemachineVirtualCamera.transform.rotation = Quaternion.Euler(pitch , yaw, 0f);
+    }
+
+    public float ClampAngle(float angle, float minAngle, float maxAngle){
+        if (angle > 360f) angle -= 360f;
+        else if (angle < -360f) angle +=360f;
+        return Mathf.Clamp(angle,minAngle,maxAngle);
+    }
+
+    
+    protected GameObject GetNearestTarget(Vector3 center, float radius){
+        int numColliders = Physics.OverlapSphereNonAlloc(center,radius, hitColliders,this.targetLayerMask);
+
+        if (numColliders == 0) return null;
+        
+        float currentNearestDistance = Vector3.SqrMagnitude(hitColliders[0].transform.position - this.transform.position);
+        var nearestTarget = hitColliders[0].gameObject;
+        for(int i = 1; i < numColliders; ++i){
+            var newDistance = Vector3.SqrMagnitude(hitColliders[i].transform.position - this.transform.position);
+            if (newDistance < currentNearestDistance){
+                nearestTarget = hitColliders[i].gameObject;
+            }
+        }
+        return nearestTarget;
+    }
+
+    protected void LockOnTarget(){
+        // if user is currently locking the target, cancel locking action
+        if (isLockedOnTarget){
+            inputReader.isLockedOnTarget = false;
+            lockOnTarget = null;
+            OnLockOnTargetActionPerformed?.Invoke(null,false);
+            return;
+        }
+        
+        var target = GetNearestTarget(this.transform.position,this.targetLockOnRadius);
+        // if we invoke the event with boolean param to let the receiver know if we get the target to lock on
+        bool isFoundTarget = target != null;
+        this.inputReader.isLockedOnTarget = isFoundTarget;
+        if (isFoundTarget){
+            this.OnLockOnTargetActionPerformed?.Invoke(target.transform,isFoundTarget);
+            lockOnTarget = target.transform;
+            SwitchToLockOnState();
+            return;
+        }
+        lockOnTarget = null;
+        this.OnLockOnTargetActionPerformed?.Invoke(null,isFoundTarget);
+    }
+
+    protected void SwitchToLockOnState(){
+        this.SwitchState(new PlayerLockOnState(this));
+    }
+
+    private void OnDrawGizmos() {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(transform.position,targetLockOnRadius);
     }
 }
