@@ -1,8 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Cinemachine;
 using UnityEngine;
+using FSM;
+using FSM.Action;
 
 [RequireComponent(typeof(InputReader))]
 [RequireComponent(typeof(CharacterController))]
