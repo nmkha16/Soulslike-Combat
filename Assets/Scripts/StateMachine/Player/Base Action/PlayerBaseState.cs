@@ -37,7 +37,6 @@ public abstract class PlayerBaseState : State
     /// </summary>
     /// <param name="elapsed"></param>
     protected void CalculateMoveDirection(float elapsed, AnimationCurve curve, float easing){
-        
         Vector3 moveDirection = playerStateMachine.transform.forward;
 
         playerStateMachine.velocity.x = moveDirection.x * curve.Evaluate(elapsed) * easing;

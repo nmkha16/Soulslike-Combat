@@ -43,7 +43,7 @@ namespace FSM.Action{
                 return;
             }
 
-            if (elapsed > animLength){
+            if (elapsed > animLength * 0.9f){
                 if (playerStateMachine.inputReader.isLockedOnTarget){
                     playerStateMachine.SwitchState(new PlayerLockOnState(playerStateMachine));
                     return;
