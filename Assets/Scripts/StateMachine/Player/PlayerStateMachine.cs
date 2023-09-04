@@ -31,9 +31,9 @@ public class PlayerStateMachine : StateMachine
 
     [Header("Target Layer")]
     public LayerMask targetLayerMask;
-    public float targetLockOnRadius = 5f;
+    public float targetLockOnRadius = 8f;
     private Collider[] hitColliders = new Collider[3];
-    public Transform lockOnTarget;
+    [HideInInspector] public Transform lockOnTarget;
     
     public void AssignCamera(GameObject followPlayerCamera){
         this.cinemachineVirtualCamera = followPlayerCamera;
@@ -105,9 +105,7 @@ public class PlayerStateMachine : StateMachine
     protected void LockOnTarget(){
         // if user is currently locking the target, cancel locking action
         if (isLockedOnTarget){
-            inputReader.isLockedOnTarget = false;
-            lockOnTarget = null;
-            OnLockOnTargetActionPerformed?.Invoke(null,false);
+            CancelLockOnState();
             return;
         }
         
@@ -123,6 +121,12 @@ public class PlayerStateMachine : StateMachine
         }
         lockOnTarget = null;
         this.OnLockOnTargetActionPerformed?.Invoke(null,isFoundTarget);
+    }
+
+    public void CancelLockOnState(){
+        inputReader.isLockedOnTarget = false;
+        lockOnTarget = null;
+        OnLockOnTargetActionPerformed?.Invoke(null,false);
     }
 
     protected void SwitchToLockOnState(){

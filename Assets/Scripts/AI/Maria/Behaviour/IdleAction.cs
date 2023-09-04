@@ -7,7 +7,7 @@ namespace AI.Maria.Behaviour{
     public class IdleAction : Action
     {
         private readonly int moveSpeedHash = Animator.StringToHash("MoveSpeed");
-        private readonly int isNeutral = Animator.StringToHash("IsNeutral");
+        private readonly int isNeutralHash = Animator.StringToHash("IsNeutral");
         private const float animationDampTime = 0.05f;
         private Animator animator;
 
@@ -17,7 +17,7 @@ namespace AI.Maria.Behaviour{
 
         protected override Status OnUpdate()
         {
-            animator.SetBool(isNeutral,true);
+            animator.SetBool(isNeutralHash,true);
             animator.SetFloat(moveSpeedHash,0f,animationDampTime,Time.deltaTime);
             return Status.Success;
         }

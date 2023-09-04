@@ -24,7 +24,7 @@ namespace AI.Maria.Behaviour{
 
         protected override Status OnUpdate()
         {
-            var target = GetTarget(transform.position,radius);
+            var target = GetTargetInRange(transform.position,radius);
 
             if (target == null) {
                 maria.isInCombat = false;
@@ -44,7 +44,7 @@ namespace AI.Maria.Behaviour{
         /// <param name="center"></param>
         /// <param name="radius"></param>
         /// <returns></returns>
-        private GameObject GetTarget(Vector3 center, float radius){
+        private GameObject GetTargetInRange(Vector3 center, float radius){
             int numColliders = Physics.OverlapSphereNonAlloc(center,radius, hitColliders,this.targetLayerMask);
 
             if (numColliders == 0) return null;

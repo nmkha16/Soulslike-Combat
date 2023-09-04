@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: abed0989f0c8b304aab4e43fdb6ba6c3
+guid: 3e453e92aec4dc244a8e38c2ce8ee9a7
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
@@ -33,11 +33,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Maria Idle
+      name: Maria Strafe Right
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 120
+      lastFrame: 38
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

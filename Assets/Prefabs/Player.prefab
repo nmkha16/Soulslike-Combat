@@ -275,7 +275,7 @@ MonoBehaviour:
   targetLayerMask:
     serializedVersion: 2
     m_Bits: 64
-  targetLockOnRadius: 5
+  targetLockOnRadius: 8
   lockOnTarget: {fileID: 0}
 --- !u!114 &582552314586643647
 MonoBehaviour:

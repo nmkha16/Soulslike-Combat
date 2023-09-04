@@ -12,6 +12,7 @@ namespace FSM.Action{
         private const float crossFadeDuration = .25f;
         private const float animationDampTime = 0.1f;
         private const float deltaLockOnSpeedReductionMultiplier = 0.70f;
+        private readonly float maxLockOnRange = 70f;
 
         public PlayerLockOnState(PlayerStateMachine playerStateMachine) : base(playerStateMachine)
         {
@@ -31,6 +32,12 @@ namespace FSM.Action{
             if (!playerStateMachine.characterController.isGrounded){
                 playerStateMachine.SwitchState(new PlayerFallState(playerStateMachine));
             }
+
+            if (IsLockOnTargetOutOfRange()){
+                playerStateMachine.CancelLockOnState();
+                SwitchToMoveState();
+            }
+
             CalculateMoveDirection();
             FaceTargetDirection(playerStateMachine.lockOnTarget);
             Move();
@@ -72,6 +79,10 @@ namespace FSM.Action{
 
         private void SwitchToMoveState(){
             playerStateMachine.SwitchState(new PlayerMoveState(playerStateMachine));
+        }
+
+        private bool IsLockOnTargetOutOfRange(){
+            return (playerStateMachine.lockOnTarget.position - playerStateMachine.transform.position).sqrMagnitude > maxLockOnRange;
         }
     }
 

@@ -24,9 +24,6 @@ namespace AI.Maria{
             if (animator == null){
                 animator = GetComponent<Animator>();
             }
-        }
-
-        private void Start(){
             spawnPosition = transform.position;
         }
 
@@ -36,10 +33,16 @@ namespace AI.Maria{
         }
 
         public void CalculateMoveDirection(Vector3 position, float moveSpeed){
-            Vector3 dir = position - transform.position;
-
+            Vector3 dir = (position - transform.position).normalized;
             this.velocity.x = dir.x * moveSpeed;
             this.velocity.z = dir.z * moveSpeed;
+        }
+
+        public void FaceTarget(){
+            if (target == null) return;
+            Vector3 dir = target.position - this.transform.position;
+            dir.y = 0;
+            transform.rotation = Quaternion.Slerp(transform.rotation,Quaternion.LookRotation(dir),lookRotationDampFactor* Time.deltaTime);
         }
 
         public void ApplyGravity(){
@@ -56,5 +59,6 @@ namespace AI.Maria{
             var distance = position - this.transform.position;
             return distance.sqrMagnitude <= maxAcceptableDistance;
         }
+
     }
 }

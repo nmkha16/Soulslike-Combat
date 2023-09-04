@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Cinemachine;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class GameManager : MonoBehaviour
     protected readonly int followPlayerAnim = Animator.StringToHash("FollowPlayerCamera");
     protected readonly int lockOnTargetAnim = Animator.StringToHash("LockOnTargetCamera");
     private PlayerStateMachine playerStateMachine;
+
+    private Coroutine lockOnRoutine;
 
     private void Awake(){
         PlayerStateMachine.OnPlayerInitialized += LoadPlayerStateMachine;
@@ -38,20 +41,50 @@ public class GameManager : MonoBehaviour
     }
 
     private void LockOnTargetUI(Transform target, bool isFound){
-        var targetPosition = isFound ? CalculateHeightIndicator(target) : Vector3.zero;
-        
         if (isFound){
             cinemachineAnimator.Play(lockOnTargetAnim);
             lockOnCamera.m_LookAt = target;
-        }
-        else cinemachineAnimator.Play(followPlayerAnim);
+            var targetCharacterController = target.GetComponent<CharacterController>();
 
-        lockingUI.ToggleLockOnIndicator(targetPosition,isFound);
+            StopLockOnRoutine();
+
+            lockOnRoutine = StartCoroutine(UpdateLockOnIndicatorUIPosition(targetCharacterController));
+        }
+        else {
+            lockingUI.ToggleLockOnIndicator(false);
+
+            StopLockOnRoutine();
+
+            cinemachineAnimator.Play(followPlayerAnim);
+        }
     }
 
-    private Vector3 CalculateHeightIndicator(Transform target){
-        float h1 = target.GetComponent<CapsuleCollider>().height;
-        float h2 = target.localScale.y;
+    private void StopLockOnRoutine(){
+        if (lockOnRoutine != null){
+            StopCoroutine(lockOnRoutine);
+            lockOnRoutine = null;
+        }
+    }
+
+    private IEnumerator UpdateLockOnIndicatorUIPosition(CharacterController target){
+        lockingUI.ToggleLockOnIndicator(true);
+        while (true){
+            var newPosition = CalculateHeightIndicator(target);
+            lockingUI.UpdateLockOnIndicator(newPosition);
+            yield return null;
+        }
+    }
+
+    /// <summary>
+    /// Use capsule collider high to calculate target's chest area
+    /// Multiply Capsule Height with Y scale = Height
+    /// To get the target's chest location, we take the Height - (Height/2/2)
+    /// </summary>
+    /// <param name="target"></param>
+    /// <returns></returns>
+    private Vector3 CalculateHeightIndicator(CharacterController target){
+        float h1 = target.height;
+        float h2 = target.transform.localScale.y;
 
         float h = h1*h2;
         float half_h = (h/2)/2;
@@ -72,6 +105,5 @@ public class GameManager : MonoBehaviour
 
         // for lock on camera
         lockOnCamera.m_Follow = player.transform;
-
     }
 }

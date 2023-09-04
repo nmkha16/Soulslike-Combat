@@ -9,7 +9,6 @@ public class PlayerLockOnUI : MonoBehaviour
     [SerializeField] private GameObject canvas;
     private Transform mainCameraTransform;
     private Vector3 dir;
-    private readonly Vector3 defaultV3Zero = Vector3.zero;
     private void Awake(){
         if (canvas == null){
             canvas = this.transform.parent.gameObject;
@@ -27,8 +26,11 @@ public class PlayerLockOnUI : MonoBehaviour
         this.transform.localRotation = Quaternion.LookRotation(dir);
     }
 
-    public void ToggleLockOnIndicator(Vector3 position ,bool toggle){
-        canvas.transform.position = position;
+    public void ToggleLockOnIndicator(bool toggle){
         canvas.SetActive(toggle);
+    }
+
+    public void UpdateLockOnIndicator(Vector3 position){
+        canvas.transform.position = position;
     }
 }

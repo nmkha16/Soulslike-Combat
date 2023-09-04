@@ -20,7 +20,6 @@ public abstract class PlayerBaseState : State
         Vector3 camRight = new Vector3(playerStateMachine.mainCamera.transform.right.x, 0, playerStateMachine.mainCamera.transform.right.z);
 
         Vector3 moveDirection = camForward.normalized * playerStateMachine.inputReader.moveComposite.y + camRight.normalized * playerStateMachine.inputReader.moveComposite.x;
-        
         if (playerStateMachine.inputReader.isRunning){
             playerStateMachine.velocity.x = moveDirection.x * playerStateMachine.moveSpeed;
             playerStateMachine.velocity.z = moveDirection.z * playerStateMachine.moveSpeed;
