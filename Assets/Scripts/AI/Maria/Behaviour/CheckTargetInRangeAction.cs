@@ -11,6 +11,7 @@ namespace AI.Maria.Behaviour{
         [Header("Target Player")]
         private LayerMask targetLayerMask;
         [SerializeField] private float radius = 8f;
+        [SerializeField] private float maxAcceptableDistance = 140f;
         private Collider[] hitColliders = new Collider[1];
 
         public override void Awake() {
@@ -24,6 +25,19 @@ namespace AI.Maria.Behaviour{
 
         protected override Status OnUpdate()
         {
+            // should perform speherecheck once and stop after the AI got the target
+            // then we should depend on distance check which is better than using overlapsphere every frame
+            if (maria.target != null){
+                var distance = (maria.target.transform.position - transform.position).sqrMagnitude;
+                if (distance <= maxAcceptableDistance){
+                    return Status.Success;
+                }
+                
+                maria.target = null;
+                maria.isInCombat = false;
+                return Status.Failure;
+            }
+
             var target = GetTargetInRange(transform.position,radius);
 
             if (target == null) {

@@ -272,6 +272,58 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
+  - anim: {fileID: -203655887218126122, guid: ced6239c5f1b4ed42a2e6877eb0c2c3d, type: 3}
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0.018299103
+        value: 0.77153283
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.40174562
+        value: 1.0979382
+        inSlope: 0.7499727
+        outSlope: 0.7499727
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1.2117682
+        value: 0.62166286
+        inSlope: -1.1721079
+        outSlope: -1.1721079
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.114469975
+        outWeight: 0.7962213
+      - serializedVersion: 3
+        time: 2.2684314
+        value: 1.0102943
+        inSlope: -1.3797916
+        outSlope: -1.3797916
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 2.5254211
+        value: 0.18855608
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   targetLayerMask:
     serializedVersion: 2
     m_Bits: 64

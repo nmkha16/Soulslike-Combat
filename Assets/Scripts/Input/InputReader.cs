@@ -14,6 +14,7 @@ public class InputReader : MonoBehaviour, Controls.IPlayerActions
     public Action OnAttackPerformed;
     public Action OnHeavyAttackPerformed;
     public Action OnLockedOnPerformed;
+    public Action OnRollPerformed;
     public bool isRunning;
     public bool isLockedOnTarget;
     private Controls controls;
@@ -68,5 +69,11 @@ public class InputReader : MonoBehaviour, Controls.IPlayerActions
     {
         if (!context.performed) return;
         OnHeavyAttackPerformed?.Invoke();
+    }
+
+    public void OnRoll(InputAction.CallbackContext context)
+    {
+        if (!context.performed) return;
+        OnRollPerformed?.Invoke();
     }
 }

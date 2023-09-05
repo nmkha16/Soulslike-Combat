@@ -20,6 +20,7 @@ namespace FSM.Action{
             playerStateMachine.inputReader.OnJumpPerformed += SwitchToJumpState;
             playerStateMachine.inputReader.OnAttackPerformed += SwitchToAttack1State;
             playerStateMachine.inputReader.OnHeavyAttackPerformed += SwitchToHeavyAttackState;
+            playerStateMachine.inputReader.OnRollPerformed += SwitchToRollState;
         }
 
         public override void Tick()
@@ -43,6 +44,7 @@ namespace FSM.Action{
             playerStateMachine.inputReader.OnJumpPerformed -= SwitchToJumpState;
             playerStateMachine.inputReader.OnAttackPerformed -= SwitchToAttack1State;
             playerStateMachine.inputReader.OnHeavyAttackPerformed -= SwitchToHeavyAttackState;
+            playerStateMachine.inputReader.OnRollPerformed -= SwitchToRollState;
         }
 
         private void SwitchToJumpState(){
@@ -58,6 +60,10 @@ namespace FSM.Action{
         
         private void SwitchToHeavyAttackState(){
             playerStateMachine.SwitchState(new PlayerHeavyAttackState(playerStateMachine));
+        }
+
+        private void SwitchToRollState(){
+            playerStateMachine.SwitchState(new PlayerRollState(playerStateMachine));
         }
     }
 }

@@ -25,6 +25,7 @@ namespace FSM.Action{
             playerStateMachine.inputReader.OnAttackPerformed += SwitchToAttack1State;
             playerStateMachine.inputReader.OnHeavyAttackPerformed += SwitchToHeavyAttackState;
             playerStateMachine.inputReader.OnLockedOnPerformed += ValidateLockOnState;
+            playerStateMachine.inputReader.OnRollPerformed += SwitchToRollState;
         }
 
         public override void Tick()
@@ -51,6 +52,8 @@ namespace FSM.Action{
             playerStateMachine.inputReader.OnAttackPerformed -= SwitchToAttack1State;
             playerStateMachine.inputReader.OnHeavyAttackPerformed -= SwitchToHeavyAttackState;
             playerStateMachine.inputReader.OnLockedOnPerformed -= ValidateLockOnState;
+            playerStateMachine.inputReader.OnRollPerformed -= SwitchToRollState;
+
         }
 
         protected override void CalculateMoveDirection(){
@@ -83,6 +86,10 @@ namespace FSM.Action{
 
         private bool IsLockOnTargetOutOfRange(){
             return (playerStateMachine.lockOnTarget.position - playerStateMachine.transform.position).sqrMagnitude > maxLockOnRange;
+        }
+
+        private void SwitchToRollState(){
+            playerStateMachine.SwitchState(new PlayerRollState(playerStateMachine));
         }
     }
 

@@ -4,4 +4,5 @@ public enum AttackSequence{
     Attack3,
     Heavy_Attack,
     Running_Attack,
+    Roll,
 }

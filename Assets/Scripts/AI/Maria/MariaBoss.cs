@@ -38,6 +38,13 @@ namespace AI.Maria{
             this.velocity.z = dir.z * moveSpeed;
         }
 
+        public void CalculateMoveDirection(float elapsed, AnimationCurve curve, float easing){
+            Vector3 moveDirection = transform.forward;
+
+            velocity.x = moveDirection.x * curve.Evaluate(elapsed) * easing;
+            velocity.z = moveDirection.z * curve.Evaluate(elapsed) * easing;
+        }
+
         public void FaceTarget(){
             if (target == null) return;
             Vector3 dir = target.position - this.transform.position;

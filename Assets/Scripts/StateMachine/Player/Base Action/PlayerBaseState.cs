@@ -30,12 +30,7 @@ public abstract class PlayerBaseState : State
         }
     }
 
-    
-    /// <summary>
-    /// alternative version of CalculateMoveDirection from parent, take account into animation curve to calculate character controller velocity
-    /// </summary>
-    /// <param name="elapsed"></param>
-    protected void CalculateMoveDirection(float elapsed, AnimationCurve curve, float easing){
+    protected virtual void CalculateMoveDirection(float elapsed, AnimationCurve curve, float easing){
         Vector3 moveDirection = playerStateMachine.transform.forward;
 
         playerStateMachine.velocity.x = moveDirection.x * curve.Evaluate(elapsed) * easing;

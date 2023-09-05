@@ -15,7 +15,6 @@ namespace AI.Maria.Behaviour{
         private readonly int moveXHash = Animator.StringToHash("MoveX");
         private readonly int moveYHash = Animator.StringToHash("MoveY");
         private const float animationDampTime = 0.2f;
-        [SerializeField] private float maxAcceptableDistance = 1f;
         [SerializeField] private float strafeAngle = 65f;
         [SerializeField] private float strafeSpeed = 2.75f;
         private MariaBoss maria;
@@ -31,12 +30,8 @@ namespace AI.Maria.Behaviour{
         protected override Status OnUpdate()
         {
             elapsed += Time.deltaTime;
-            if (maria.IsArriveAtPosition(maria.target.position,maxAcceptableDistance)){
-                DecideStrafeOption();
-                return Status.Success;
-            }
 
-            if (elapsed > 2f){
+            if (elapsed > 1f){
                 DecideStrafeOption();
             }
             
@@ -49,7 +44,7 @@ namespace AI.Maria.Behaviour{
             animator.SetFloat(moveXHash, strafeDir == StrafeDirection.Left ? -1f : 1f,animationDampTime,Time.deltaTime);
             animator.SetFloat(moveYHash,0.3f,animationDampTime,Time.deltaTime);
 
-            return Status.Running;
+            return Status.Success;
         }
 
         private void StrafeTowardTarget(){
