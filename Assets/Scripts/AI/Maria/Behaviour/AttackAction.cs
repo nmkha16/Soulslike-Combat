@@ -5,12 +5,13 @@ using UniBT;
 using FSM;
 
 namespace AI.Maria.Behaviour{
-    public class FullComboAttackAction : Action
+    public class AttackAction : Action
     {
-        private readonly int isFullComboHash = Animator.StringToHash("IsFullCombo");
         [SerializeField] private AnimationClip anim;
         [SerializeField] private AnimationCurve curve;
+        [SerializeField] private string animationHashParams;
         [SerializeField] private float easing = 3f;
+        private int isAttackHash;
         private Animator animator;
         private MariaBoss maria;
         private float animLength;
@@ -19,6 +20,7 @@ namespace AI.Maria.Behaviour{
         public override void Awake() {
             animator = gameObject.GetComponent<Animator>();
             maria = gameObject.GetComponent<MariaBoss>();
+            isAttackHash = Animator.StringToHash(animationHashParams);
         }
 
         public override void Start(){
@@ -30,7 +32,7 @@ namespace AI.Maria.Behaviour{
             elapsed += Time.deltaTime;
             if (elapsed >= animLength){
                 elapsed = 0f;
-                animator.SetBool(isFullComboHash, false);
+                animator.SetBool(isAttackHash, false);
                 return Status.Success;
             }
             maria.ApplyGravity();
@@ -38,7 +40,7 @@ namespace AI.Maria.Behaviour{
             maria.FaceMoveDirection();
             maria.Move();
 
-            animator.SetBool(isFullComboHash,true);
+            animator.SetBool(isAttackHash,true);
             return Status.Running;
         }
     }
