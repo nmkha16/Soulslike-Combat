@@ -15,6 +15,7 @@ namespace AI.Maria{
         [Header("Target Player")]
         public LayerMask targetLayerMask;
         public bool isInCombat;
+        public bool shouldTaunt;
         [HideInInspector] public Transform target;
 
         private void Awake(){
@@ -29,6 +30,7 @@ namespace AI.Maria{
 
         public void FaceMoveDirection(){
             Vector3 dir = new Vector3(velocity.x,0,velocity.z);
+            if (dir == Vector3.zero) return;
             transform.rotation = Quaternion.Slerp(transform.rotation,Quaternion.LookRotation(dir),lookRotationDampFactor * Time.deltaTime);
         }
 
@@ -38,11 +40,21 @@ namespace AI.Maria{
             this.velocity.z = dir.z * moveSpeed;
         }
 
+        /// <summary>
+        /// calculate forward direction of the said object
+        /// </summary>
+        /// <param name="elapsed"></param>
+        /// <param name="curve"></param>
+        /// <param name="easing"></param>
         public void CalculateMoveDirection(float elapsed, AnimationCurve curve, float easing){
             Vector3 moveDirection = transform.forward;
-
             velocity.x = moveDirection.x * curve.Evaluate(elapsed) * easing;
             velocity.z = moveDirection.z * curve.Evaluate(elapsed) * easing;
+        }
+
+        public void CalculateRollDirection(Vector3 rollDirection,float elapsed, AnimationCurve curve, float easing){
+            velocity.x = rollDirection.x * curve.Evaluate(elapsed) * easing;
+            velocity.z = rollDirection.z * curve.Evaluate(elapsed) * easing;
         }
 
         public void FaceTarget(){
@@ -65,6 +77,15 @@ namespace AI.Maria{
         public bool IsArriveAtPosition(Vector3 position, float maxAcceptableDistance){
             var distance = position - this.transform.position;
             return distance.sqrMagnitude <= maxAcceptableDistance;
+        }
+
+        public void CalculateStrafeDirection(float angle, float strafeSpeed){
+            Vector3 dir = target.position - transform.position;
+
+            var strafeDir = (Quaternion.AngleAxis(angle,Vector3.up) * dir).normalized;
+
+            velocity.x = strafeDir.x * strafeSpeed;
+            velocity.z = strafeDir.z * strafeSpeed;
         }
 
     }

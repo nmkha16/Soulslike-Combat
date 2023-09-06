@@ -6,3 +6,14 @@ public enum AttackSequence{
     Running_Attack,
     Roll,
 }
+
+public enum MariaAttackType{
+    FullCombo,
+}
+
+public enum RollDirection{
+    Left = 0,
+    Right,
+    Forward,
+    Backward = 3,
+}

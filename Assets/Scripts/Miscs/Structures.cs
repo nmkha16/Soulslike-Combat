@@ -7,3 +7,9 @@ public class AttackAnimation{
     public AnimationClip anim;
     public AnimationCurve curve;
 }
+
+[Serializable]
+public class MariaAttackCooldown{
+    public MariaAttackType attackType;
+    public float cooldown;
+}

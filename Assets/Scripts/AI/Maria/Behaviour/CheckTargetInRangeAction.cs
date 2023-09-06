@@ -8,7 +8,6 @@ namespace AI.Maria.Behaviour{
     {
         private MariaBoss maria;
         private Transform transform;
-        [Header("Target Player")]
         private LayerMask targetLayerMask;
         [SerializeField] private float radius = 8f;
         [SerializeField] private float maxAcceptableDistance = 140f;
@@ -25,8 +24,8 @@ namespace AI.Maria.Behaviour{
 
         protected override Status OnUpdate()
         {
-            // should perform speherecheck once and stop after the AI got the target
-            // then we should depend on distance check which is better than using overlapsphere every frame
+            // should perform speherecheck once then stop after the AI got the target
+            // we should depend on distance check which is better than using overlapsphere every frame
             if (maria.target != null){
                 var distance = (maria.target.transform.position - transform.position).sqrMagnitude;
                 if (distance <= maxAcceptableDistance){
@@ -38,6 +37,7 @@ namespace AI.Maria.Behaviour{
                 return Status.Failure;
             }
 
+            // detect target for the first time
             var target = GetTargetInRange(transform.position,radius);
 
             if (target == null) {
@@ -48,6 +48,7 @@ namespace AI.Maria.Behaviour{
             else{
                 maria.isInCombat = true;
                 maria.target = target.transform;
+                maria.shouldTaunt = true;
                 return Status.Success;
             }
         }
