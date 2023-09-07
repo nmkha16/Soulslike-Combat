@@ -61,6 +61,8 @@ public class PlayerStateMachine : StateMachine, IDamagable
         if (hitDetection == null){
             hitDetection = GetComponentInChildren<HitDetection>();
         }
+
+        defaultLayerMask = gameObject.layer;    
     }
 
     private void Start(){
