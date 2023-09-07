@@ -7,8 +7,14 @@ public enum AttackSequence{
     Roll,
 }
 
+public enum MovementSequence{
+    Roll
+}
+
 public enum MariaAttackType{
-    FullCombo,
+    Sword,
+    KickLeft,
+    KickRight,
 }
 
 public enum RollDirection{

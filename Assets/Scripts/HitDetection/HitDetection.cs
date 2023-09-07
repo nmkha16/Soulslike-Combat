@@ -13,10 +13,6 @@ public class HitDetection : MonoBehaviour
         this.enabled = false;
     }
 
-    // private void OnDisable() {
-    //     lastHitTransform = null;
-    // }
-
     private void FixedUpdate() {
         Debug.DrawRay(handTransform.position,handTransform.forward * raycastDistance,Color.Lerp(Color.red,Color.green,UnityEngine.Random.Range(0.2f,1f)),2f);
         int hits = Physics.RaycastNonAlloc(handTransform.position,handTransform.forward,hit, raycastDistance,targetLayerMask);

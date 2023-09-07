@@ -7,10 +7,11 @@ using FSM.Action;
 [RequireComponent(typeof(InputReader))]
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(CharacterController))]
-public class PlayerStateMachine : StateMachine
+public class PlayerStateMachine : StateMachine, IDamagable
 {
     public static Action<PlayerStateMachine> OnPlayerInitialized;
     public Action<Transform,bool> OnLockOnTargetActionPerformed;
+    public int health = 200;
     public Vector3 velocity;
     public float moveSpeed {get; private set;} = 5f;
     public float jumpForce {get; private set;} = 5f;
@@ -21,7 +22,9 @@ public class PlayerStateMachine : StateMachine
     public CharacterController characterController {get; private set;}
 
     [Header("Attack Animation Clips")]
-    public List<AttackAnimation> animationClips;
+    public List<AttackAnimation> animationAnimationClips;
+    [Header("Movement Animation Clips")]
+    public List<AttackAnimation> movementAnimationClips;
     [Header("Camera")]
     private GameObject cinemachineVirtualCamera;
     private float yaw, pitch;
@@ -29,12 +32,23 @@ public class PlayerStateMachine : StateMachine
     public bool isLockedOnTarget => inputReader.isLockedOnTarget;
     public bool isRunning => inputReader.isRunning;
 
+    public int Health { 
+        get => health;
+        set {
+            this.health = value;
+        }
+    }
+    public bool isTakenDamge;
+
     [Header("Target Layer")]
     public LayerMask targetLayerMask;
     public float targetLockOnRadius = 8f; // use for check overlapsphere
     public float maxLockOnRangeBeforeCancel = 140f; // distance via sqrmagnitude
     private Collider[] hitColliders = new Collider[3];
     [HideInInspector] public Transform lockOnTarget;
+
+    private LayerMask defaultLayerMask;
+    [SerializeField] private LayerMask ignoreRaycastLayerMask; 
 
     [Header("Hit Detection")]
     [SerializeField] private HitDetection hitDetection;
@@ -79,7 +93,7 @@ public class PlayerStateMachine : StateMachine
 
         if (inputReader.mouseDelta.sqrMagnitude > cameraThreshold && !isLockedOnTarget){
             yaw += inputReader.mouseDelta.x * Time.deltaTime * 3f;
-            pitch += inputReader.mouseDelta.y * Time.deltaTime;
+            pitch += inputReader.mouseDelta.y * Time.deltaTime  * 3f;
         }
 
         // clamp value on 360 degree
@@ -150,5 +164,21 @@ public class PlayerStateMachine : StateMachine
 
     public void ToggleWeaponHitbox(bool toggle){
         hitDetection.enabled = toggle;
+    }
+
+    public void ToggleInvincibility(bool toggle){
+        gameObject.layer = toggle ? ignoreRaycastLayerMask : defaultLayerMask;
+    }
+
+    public void TakeDamage(int amount)
+    {
+        if (isTakenDamge) return;
+        isTakenDamge = true;
+        SwitchToImpactState();
+        Health-= amount;
+    }
+
+    protected void SwitchToImpactState(){
+        SwitchState(new PlayerImpactState(this));
     }
 }

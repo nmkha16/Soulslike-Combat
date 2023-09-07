@@ -1,10 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace AI.Maria{
     public class MariaBoss : MonoBehaviour, IDamagable
-    {
+    {   
+        public Action<Transform> OnActivateHitbox; // params are Transform of hit component
+        public Action OnEndHitbox;
         [SerializeField] private CharacterController characterController;
         [SerializeField] private Animator animator;
         [HideInInspector] public Vector3 spawnPosition {get; private set;}
@@ -34,6 +37,10 @@ namespace AI.Maria{
         private LayerMask defaultLayerMask;
         [SerializeField] private LayerMask ignoreRaycastLayer;
 
+        [Header("Hit component")]
+        public Transform leftLegTransform;
+        public Transform rightLegTransform;
+        public Transform rightHandTransform;
 
         private void Awake(){
             if (characterController == null){

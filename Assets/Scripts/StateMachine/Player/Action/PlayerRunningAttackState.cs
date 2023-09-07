@@ -21,8 +21,8 @@ namespace FSM.Action{
         {
             playerStateMachine.animator.CrossFadeInFixedTime(heavyAttack,crossFadeDuration);
             playerStateMachine.animator.SetFloat(animMultiplier,recommendSpeed);
-            animLength = playerStateMachine.animationClips[(int)attackSequence].anim.length / recommendSpeed;
-            curve = playerStateMachine.animationClips[(int)attackSequence].curve;
+            animLength = playerStateMachine.animationAnimationClips[(int)attackSequence].anim.length / recommendSpeed;
+            curve = playerStateMachine.animationAnimationClips[(int)attackSequence].curve;
         }
 
         public override void Tick()

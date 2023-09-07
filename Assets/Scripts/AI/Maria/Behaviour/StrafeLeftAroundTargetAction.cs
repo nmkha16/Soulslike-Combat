@@ -6,7 +6,6 @@ using UniBT;
 namespace AI.Maria.Behaviour{
     public class StrafeLeftAroundTargetAction : Action
 {
-        private readonly int isNeutralHash = Animator.StringToHash("IsNeutral");
         private readonly int moveXHash = Animator.StringToHash("MoveX");
         private readonly int moveYHash = Animator.StringToHash("MoveY");
         private const float animationDampTime = 0.25f;

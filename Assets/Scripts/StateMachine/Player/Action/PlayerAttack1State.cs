@@ -15,6 +15,8 @@ namespace FSM.Action{
         private AnimationCurve curve;
         private float elapsed = 0f;
         private bool shouldEnterNextAttack;
+
+        private float percentTimeOfStartHitbox, percentTimeOfEndHitbox;
         private float startHitbox,endHitbox;
 
         public PlayerAttack1State(PlayerStateMachine playerStateMachine) : base(playerStateMachine)
@@ -24,13 +26,16 @@ namespace FSM.Action{
         public override void Enter()
         {
             playerStateMachine.inputReader.OnAttackPerformed += EnterNextAttackSequence;
-
             playerStateMachine.animator.CrossFadeInFixedTime(attack1Hash,crossFadeDuration);
             playerStateMachine.animator.SetFloat(animMultiplier,recommendSpeed);
-            animLength = playerStateMachine.animationClips[(int)attackSequence].anim.length / recommendSpeed;
-            curve = playerStateMachine.animationClips[(int)attackSequence].curve;
-            startHitbox = animLength * 0.41f;
-            endHitbox = animLength * 0.5f;
+            animLength = playerStateMachine.animationAnimationClips[(int)attackSequence].anim.length / recommendSpeed;
+            curve = playerStateMachine.animationAnimationClips[(int)attackSequence].curve;
+
+            percentTimeOfStartHitbox = playerStateMachine.animationAnimationClips[(int)attackSequence].percentTimeOfStartHitbox;
+            percentTimeOfEndHitbox = playerStateMachine.animationAnimationClips[(int)attackSequence].percentTimeOfEndHitbox;
+
+            startHitbox = animLength * percentTimeOfStartHitbox;
+            endHitbox = animLength * percentTimeOfEndHitbox;
         }
 
         public override void Tick()
@@ -44,7 +49,6 @@ namespace FSM.Action{
                 playerStateMachine.ToggleWeaponHitbox(false);
             }
 
-            // push player forward on last string of attack
             CalculateMoveDirection(elapsed, curve, easing: easingCurve);
             FaceMoveDirection();
             Move();

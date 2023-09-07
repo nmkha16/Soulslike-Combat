@@ -7,12 +7,14 @@ namespace FSM.Action{
     {
         private readonly int rollHash = Animator.StringToHash("Roll");
         private const float crossFadeDuration = 0.2f;
-        private AttackSequence attackSequence = AttackSequence.Roll; // bear with me the name i'm too lazy to fix it, inspector will reset all my animation curve
+        private MovementSequence movementSequence = MovementSequence.Roll; // bear with me the name i'm too lazy to fix it, inspector will reset all my animation curve
         private float easingCurve = 5f;
         private float recommendSpeed = 1.5f;
         private float animLength;
         private AnimationCurve curve;
         private float elapsed = 0f;
+
+        private float percentTimeOfStartIframe, percentTimeOfEndIframe;
 
         private Vector2 moveCompositeSnapshot;
         public PlayerRollState(PlayerStateMachine playerStateMachine) : base(playerStateMachine)
@@ -23,14 +25,25 @@ namespace FSM.Action{
         {
             playerStateMachine.animator.CrossFadeInFixedTime(rollHash, crossFadeDuration);
             playerStateMachine.animator.SetFloat(animMultiplier,recommendSpeed);
-            animLength = playerStateMachine.animationClips[(int)attackSequence].anim.length / recommendSpeed;
-            curve = playerStateMachine.animationClips[(int)attackSequence].curve;
+            animLength = playerStateMachine.animationAnimationClips[(int)movementSequence].anim.length / recommendSpeed;
+            curve = playerStateMachine.animationAnimationClips[(int)movementSequence].curve;
             moveCompositeSnapshot = playerStateMachine.inputReader.moveComposite;
+
+            percentTimeOfStartIframe = playerStateMachine.animationAnimationClips[(int)movementSequence].percentTimeOfStartHitbox;
+            percentTimeOfEndIframe = playerStateMachine.animationAnimationClips[(int)movementSequence].percentTimeOfEndHitbox;
+
         }
 
         public override void Tick()
         {
             elapsed += Time.deltaTime;
+
+            if (elapsed >= percentTimeOfStartIframe && elapsed <= percentTimeOfEndIframe){
+                playerStateMachine.ToggleInvincibility(true);
+            }
+            else{
+                playerStateMachine.ToggleInvincibility(false);
+            }
 
             ApplyGravity();
             CalculateMoveDirection(elapsed, curve, easing: easingCurve);
@@ -48,7 +61,7 @@ namespace FSM.Action{
 
         public override void Exit()
         {
-            
+            playerStateMachine.ToggleInvincibility(false);
         }
 
         protected override void CalculateMoveDirection(float elapsed, AnimationCurve curve, float easing){
