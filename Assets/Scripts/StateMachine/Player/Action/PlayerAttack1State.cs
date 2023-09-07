@@ -16,6 +16,8 @@ namespace FSM.Action{
         private float elapsed = 0f;
         private bool shouldEnterNextAttack;
 
+        private float startHitbox,endHitbox;
+
         public PlayerAttack1State(PlayerStateMachine playerStateMachine) : base(playerStateMachine)
         {
         }
@@ -28,11 +30,20 @@ namespace FSM.Action{
             playerStateMachine.animator.SetFloat(animMultiplier,recommendSpeed);
             animLength = playerStateMachine.animationClips[(int)attackSequence].anim.length / recommendSpeed;
             curve = playerStateMachine.animationClips[(int)attackSequence].curve;
+            startHitbox = animLength * 0.41f;
+            endHitbox = animLength * 0.5f;
         }
 
         public override void Tick()
         {
             elapsed += Time.deltaTime;
+
+            if (elapsed >= startHitbox && elapsed <= endHitbox){
+                playerStateMachine.ToggleWeaponHitbox(true);
+            }
+            else {
+                playerStateMachine.ToggleWeaponHitbox(false);
+            }
 
             // push player forward on last string of attack
             CalculateMoveDirection(elapsed, curve, easing: easingCurve);
@@ -57,6 +68,7 @@ namespace FSM.Action{
         public override void Exit()
         {
             playerStateMachine.animator.SetFloat(animMultiplier,1f);
+            playerStateMachine.ToggleWeaponHitbox(false);
             playerStateMachine.inputReader.OnAttackPerformed -= EnterNextAttackSequence;
         }
 

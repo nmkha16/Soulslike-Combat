@@ -18,6 +18,7 @@ namespace AI.Maria{
                 health = value;
             }
         }
+        public bool isOnHit;
 
         [Header("Properties")]
         public Vector3 velocity;
@@ -29,6 +30,11 @@ namespace AI.Maria{
         public bool shouldTaunt;
         [HideInInspector] public Transform target;
 
+        [Header("Ignore Raycast Layer")]
+        private LayerMask defaultLayerMask;
+        [SerializeField] private LayerMask ignoreRaycastLayer;
+
+
         private void Awake(){
             if (characterController == null){
                 characterController = GetComponent<CharacterController>();
@@ -38,6 +44,7 @@ namespace AI.Maria{
             }
             spawnPosition = transform.position;
             health = 100;
+            defaultLayerMask = gameObject.layer;
         }
 
         public void FaceMoveDirection(){
@@ -110,10 +117,9 @@ namespace AI.Maria{
 
         public void TakeDamage(int amount)
         {
-            this.Health -= amount;
-            Debug.Log("ouch");
-            // play hit animation
-            
+            isOnHit = true;
+            health -= amount;
+            // isOnHit true will trigger conditional to on hit
         }
     }
 }

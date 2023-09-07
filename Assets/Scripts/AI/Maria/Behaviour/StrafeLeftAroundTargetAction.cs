@@ -9,7 +9,7 @@ namespace AI.Maria.Behaviour{
         private readonly int isNeutralHash = Animator.StringToHash("IsNeutral");
         private readonly int moveXHash = Animator.StringToHash("MoveX");
         private readonly int moveYHash = Animator.StringToHash("MoveY");
-        private const float animationDampTime = 0.02f;
+        private const float animationDampTime = 0.25f;
         [SerializeField] private float strafeAngle = -65f;
         [SerializeField] private float strafeSpeed = 2.75f;
         private MariaBoss maria;
@@ -35,7 +35,7 @@ namespace AI.Maria.Behaviour{
 
             animator.SetBool(isNeutralHash,false);
             animator.SetFloat(moveXHash,-1f,animationDampTime,Time.deltaTime);
-            animator.SetFloat(moveYHash,0.3f,animationDampTime,Time.deltaTime);
+            animator.SetFloat(moveYHash,0f,animationDampTime,Time.deltaTime);
 
             return Status.Running;
         }

@@ -36,10 +36,18 @@ public class PlayerStateMachine : StateMachine
     private Collider[] hitColliders = new Collider[3];
     [HideInInspector] public Transform lockOnTarget;
 
+    [Header("Hit Detection")]
+    [SerializeField] private HitDetection hitDetection;
+    
     public void AssignCamera(GameObject followPlayerCamera){
         this.cinemachineVirtualCamera = followPlayerCamera;
     }
 
+    private void Awake(){
+        if (hitDetection == null){
+            hitDetection = GetComponentInChildren<HitDetection>();
+        }
+    }
 
     private void Start(){
         yaw = cinemachineVirtualCamera.transform.rotation.eulerAngles.y;
@@ -140,4 +148,7 @@ public class PlayerStateMachine : StateMachine
         Gizmos.DrawSphere(transform.position,targetLockOnRadius);
     }
 
+    public void ToggleWeaponHitbox(bool toggle){
+        hitDetection.enabled = toggle;
+    }
 }

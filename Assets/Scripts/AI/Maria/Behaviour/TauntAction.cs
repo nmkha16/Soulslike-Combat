@@ -38,5 +38,9 @@ namespace AI.Maria.Behaviour{
 
             return Status.Running;
         }
+
+        public override void Abort(){
+            animator.SetBool(isTauntHash,false);
+        }
     }
 }

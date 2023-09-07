@@ -1,28 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class HitDetection : MonoBehaviour
 {
-    [SerializeField] private Collider hitbox;
-
+    [SerializeField] private Transform handTransform;
+    [SerializeField] private float raycastDistance = 2f;
+    [SerializeField] private LayerMask targetLayerMask;
+    private RaycastHit[] hit = new RaycastHit[5];
     private void Awake(){
-        hitbox.enabled = false;
+        this.enabled = false;
     }
 
-    public void EnableHitbox(){
-        hitbox.enabled = true;
-    }
+    // private void OnDisable() {
+    //     lastHitTransform = null;
+    // }
 
-    public void DisableHitbox(){
-        hitbox.enabled = false;
-    }
+    private void FixedUpdate() {
+        Debug.DrawRay(handTransform.position,handTransform.forward * raycastDistance,Color.Lerp(Color.red,Color.green,UnityEngine.Random.Range(0.2f,1f)),2f);
+        int hits = Physics.RaycastNonAlloc(handTransform.position,handTransform.forward,hit, raycastDistance,targetLayerMask);
 
-    private void OnTriggerEnter(Collider other) {
-        if (other.tag == "Enemy"){
-            other.TryGetComponent<IDamagable>(out var iDamagable);
-            if (iDamagable != null){
-                iDamagable.TakeDamage(10);
+        if (hits != 0){
+            for (int i =0 ; i < hits; i++){
+                if (hit[i].transform.TryGetComponent<IDamagable>(out var damagable)){
+                    damagable.TakeDamage(10);
+                }
             }
         }
     }

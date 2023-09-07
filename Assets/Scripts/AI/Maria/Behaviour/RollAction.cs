@@ -7,10 +7,12 @@ using UnityEditor.Experimental.GraphView;
 namespace AI.Maria.Behaviour{
     public class RollAction : Action
     {
+        protected readonly int animMultiplierHash = Animator.StringToHash("AnimMultiplier");
         private readonly int isRollHash = Animator.StringToHash("IsRoll");
         [SerializeField] private AnimationClip anim;
         [SerializeField] private AnimationCurve curve;
         [SerializeField] private float easing = 3f;
+        [SerializeField] private float recommendSpeed = 1.25f;
         private Animator animator;
         private MariaBoss maria;
         private Transform transform;
@@ -24,16 +26,18 @@ namespace AI.Maria.Behaviour{
         }
 
         public override void Start(){
-            animLength = anim.length;
+            animLength = anim.length / recommendSpeed;
             rollDirection = transform.forward;
         }
 
         protected override Status OnUpdate()
         {
+            animator.SetFloat(animMultiplierHash,recommendSpeed);
             elapsed += Time.deltaTime;
             if (elapsed >= animLength){
                 elapsed = 0f;
                 animator.SetBool(isRollHash, false);
+                animator.SetFloat(animMultiplierHash,10f);
                 DecideRollDirection();
                 return Status.Success;
             }
@@ -44,6 +48,11 @@ namespace AI.Maria.Behaviour{
 
             animator.SetBool(isRollHash,true);
             return Status.Running;
+        }
+
+        public override void Abort(){
+            animator.SetFloat(animMultiplierHash,1f);
+            animator.SetBool(isRollHash,false);
         }
 
         private void DecideRollDirection(){

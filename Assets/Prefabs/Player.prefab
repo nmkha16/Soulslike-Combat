@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 582552314586643646}
   - component: {fileID: 582552314586643641}
   - component: {fileID: 582552314586643647}
+  - component: {fileID: 1410107078629049257}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -339,6 +340,7 @@ MonoBehaviour:
   targetLockOnRadius: 11
   maxLockOnRangeBeforeCancel: 140
   lockOnTarget: {fileID: 0}
+  hitDetection: {fileID: 1410107078629049257}
 --- !u!114 &582552314586643647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -355,6 +357,23 @@ MonoBehaviour:
   moveComposite: {x: 0, y: 0}
   isRunning: 0
   isLockedOnTarget: 0
+--- !u!114 &1410107078629049257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 60281773263522159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6c9ba72308e54f478dc1beeea44aa45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handTransform: {fileID: 8305542315851077592}
+  raycastDistance: 1.5
+  targetLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &178225184291462475
 GameObject:
   m_ObjectHideFlags: 0
@@ -396,7 +415,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1174673195819246608}
   - component: {fileID: 2815818047987772819}
-  - component: {fileID: 1698788470970594381}
   m_Layer: 3
   m_Name: Paladin_J_Nordstrom
   m_TagString: Untagged
@@ -541,19 +559,6 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.7914039, y: 0.45545724, z: 0.24666308}
     m_Extent: {x: 0.15900928, y: 0.04583761, z: 0.509635}
   m_DirtyAABB: 0
---- !u!65 &1698788470970594381
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 180336219906786810}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.31801882, y: 0.09167574, z: 1.01927}
-  m_Center: {x: 0.79106194, y: 1.4112506, z: 0.25132245}
 --- !u!1 &221310496310848052
 GameObject:
   m_ObjectHideFlags: 0
@@ -2861,14 +2866,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7519986341596029040}
-  m_LocalRotation: {x: -0.4999999, y: -0.50000006, z: 0.49999967, w: 0.50000036}
+  m_LocalRotation: {x: -0.44509262, y: -0.54944754, z: 0.54944754, w: 0.44509262}
   m_LocalPosition: {x: 0.007702401, y: 0.07959965, z: 0.02820829}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1559068935430294518}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 11.98, y: -90, z: 90}
 --- !u!1 &7649106124971331998
 GameObject:
   m_ObjectHideFlags: 0
