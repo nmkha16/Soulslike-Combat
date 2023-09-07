@@ -4,15 +4,14 @@ using UnityEngine;
 using UniBT;
 
 namespace AI.Maria.Behaviour{
-    public class FollowPlayerAction : Action
+    public class SprintTowardTargetAction : Action
     {
-        private readonly int isNeutralHash = Animator.StringToHash("IsNeutral");
         private readonly int moveXHash = Animator.StringToHash("MoveX");
         private readonly int moveYHash = Animator.StringToHash("MoveY");
         private const float animationDampTime = 0.2f;
         private MariaBoss maria;
         private Animator animator;
-
+        [SerializeField] private float maxAcceptableDistanceFromTargetToStopSprint = 5f;
         [SerializeField] private float moveSpeed = 3.5f;
 
         public override void Awake(){
@@ -25,18 +24,20 @@ namespace AI.Maria.Behaviour{
 
         protected override Status OnUpdate()
         {
+            if (maria.IsArriveAtPosition(maria.target.position,maxAcceptableDistanceFromTargetToStopSprint)){
+                return Status.Success;
+            }
+
+
             maria.ApplyGravity();
             maria.CalculateMoveDirection(maria.target.position,moveSpeed);
             maria.FaceMoveDirection();
             maria.Move();
 
-            // animator set follow player in lock on manner
-            // follow player will always run straight to player
-            animator.SetBool(isNeutralHash,false);
             animator.SetFloat(moveXHash,0f,animationDampTime,Time.deltaTime);
             animator.SetFloat(moveYHash,1f,animationDampTime,Time.deltaTime);
 
-            return Status.Success;
+            return Status.Running;
         }
     }
 }

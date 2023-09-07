@@ -64,6 +64,14 @@ namespace AI.Maria{
             transform.rotation = Quaternion.Slerp(transform.rotation,Quaternion.LookRotation(dir),lookRotationDampFactor* Time.deltaTime);
         }
 
+        public void FaceTargetImmediately(){
+            if (target == null) return;
+            Vector3 dir = target.position - this.transform.position;
+            dir.y = 0;
+            if (dir == Vector3.zero) return;
+            transform.rotation = Quaternion.LookRotation(dir);
+        }
+
         public void ApplyGravity(){
             if (this.velocity.y > Physics.gravity.y){
                 this.velocity.y += Physics.gravity.y * Time.deltaTime;

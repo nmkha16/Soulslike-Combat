@@ -7,8 +7,8 @@ using FSM;
 namespace AI.Maria.Behaviour{
     public class AttackAction : Action
     {
-        [SerializeField] private AnimationClip anim;
-        [SerializeField] private AnimationCurve curve;
+        [SerializeField] private AnimationClip anim; // reference to the anim clip so can we can get exact anim length
+        [SerializeField] private AnimationCurve curve; // the animation curve to apply forward movement
         [SerializeField] private string animationHashParams;
         [SerializeField] private float easing = 3f;
         private int isAttackHash;

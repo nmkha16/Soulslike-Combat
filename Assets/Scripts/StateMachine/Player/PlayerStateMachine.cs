@@ -31,7 +31,8 @@ public class PlayerStateMachine : StateMachine
 
     [Header("Target Layer")]
     public LayerMask targetLayerMask;
-    public float targetLockOnRadius = 8f;
+    public float targetLockOnRadius = 8f; // use for check overlapsphere
+    public float maxLockOnRangeBeforeCancel = 140f; // distance via sqrmagnitude
     private Collider[] hitColliders = new Collider[3];
     [HideInInspector] public Transform lockOnTarget;
     
