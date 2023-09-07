@@ -1569,12 +1569,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   root:
-    rid: 6392343062584230763
+    rid: 6392343062584230800
   updateType: 0
   references:
     version: 2
     RefIds:
-    - rid: 6392343062584230763
+    - rid: 6392343062584230800
       type: {class: Root, ns: UniBT, asm: UniBT}
       data:
         graphPosition:
@@ -1585,8 +1585,8 @@ MonoBehaviour:
           height: 77
         description: 
         child:
-          rid: 6392343062584230764
-    - rid: 6392343062584230764
+          rid: 6392343062584230801
+    - rid: 6392343062584230801
       type: {class: Selector, ns: UniBT, asm: UniBT}
       data:
         graphPosition:
@@ -1597,10 +1597,10 @@ MonoBehaviour:
           height: 139
         description: 
         children:
-        - rid: 6392343062584230765
-        - rid: 6392343062584230766
+        - rid: 6392343062584230802
+        - rid: 6392343062584230803
         abortOnConditionChanged: 1
-    - rid: 6392343062584230765
+    - rid: 6392343062584230802
       type: {class: Sequence, ns: UniBT, asm: UniBT}
       data:
         graphPosition:
@@ -1611,10 +1611,10 @@ MonoBehaviour:
           height: 139
         description: 
         children:
-        - rid: 6392343062584230767
-        - rid: 6392343062584230768
+        - rid: 6392343062584230804
+        - rid: 6392343062584230805
         abortOnConditionChanged: 1
-    - rid: 6392343062584230766
+    - rid: 6392343062584230803
       type: {class: IsOutCombatConditional, ns: AI.Maria.Behaviour, asm: Assembly-CSharp}
       data:
         graphPosition:
@@ -1626,8 +1626,8 @@ MonoBehaviour:
         description: 
         dontReEvaluateOnRunning: 0
         child:
-          rid: 6392343062584230769
-    - rid: 6392343062584230767
+          rid: 6392343062584230806
+    - rid: 6392343062584230804
       type: {class: Selector, ns: UniBT, asm: UniBT}
       data:
         graphPosition:
@@ -1638,10 +1638,10 @@ MonoBehaviour:
           height: 139
         description: 
         children:
-        - rid: 6392343062584230770
-        - rid: 6392343062584230771
+        - rid: 6392343062584230807
+        - rid: 6392343062584230808
         abortOnConditionChanged: 1
-    - rid: 6392343062584230768
+    - rid: 6392343062584230805
       type: {class: Selector, ns: UniBT, asm: UniBT}
       data:
         graphPosition:
@@ -1652,10 +1652,10 @@ MonoBehaviour:
           height: 139
         description: 
         children:
-        - rid: 6392343062584230772
-        - rid: 6392343062584230773
+        - rid: 6392343062584230809
+        - rid: 6392343062584230810
         abortOnConditionChanged: 0
-    - rid: 6392343062584230769
+    - rid: 6392343062584230806
       type: {class: Selector, ns: UniBT, asm: UniBT}
       data:
         graphPosition:
@@ -1666,10 +1666,10 @@ MonoBehaviour:
           height: 139
         description: 
         children:
-        - rid: 6392343062584230774
-        - rid: 6392343062584230775
+        - rid: 6392343062584230811
+        - rid: 6392343062584230812
         abortOnConditionChanged: 1
-    - rid: 6392343062584230770
+    - rid: 6392343062584230807
       type: {class: ShouldTauntConditional, ns: AI.Maria.Behaviour, asm: Assembly-CSharp}
       data:
         graphPosition:
@@ -1681,8 +1681,8 @@ MonoBehaviour:
         description: 
         dontReEvaluateOnRunning: 0
         child:
-          rid: 6392343062584230776
-    - rid: 6392343062584230771
+          rid: 6392343062584230813
+    - rid: 6392343062584230808
       type: {class: CheckTargetInRangeAction, ns: AI.Maria.Behaviour, asm: Assembly-CSharp}
       data:
         graphPosition:
@@ -1694,7 +1694,7 @@ MonoBehaviour:
         description: 'check using sphereoverlap then check using distance '
         radius: 16
         maxAcceptableDistance: 150
-    - rid: 6392343062584230772
+    - rid: 6392343062584230809
       type: {class: IsTargetWithinRangeConditional, ns: AI.Maria.Behaviour, asm: Assembly-CSharp}
       data:
         graphPosition:
@@ -1706,9 +1706,9 @@ MonoBehaviour:
         description: 
         dontReEvaluateOnRunning: 1
         child:
-          rid: 6392343062584230777
+          rid: 6392343062584230814
         maxRange: 5
-    - rid: 6392343062584230773
+    - rid: 6392343062584230810
       type: {class: IsTargetWithinRangeConditional, ns: AI.Maria.Behaviour, asm: Assembly-CSharp}
       data:
         graphPosition:
@@ -1720,9 +1720,9 @@ MonoBehaviour:
         description: check using distance
         dontReEvaluateOnRunning: 0
         child:
-          rid: 6392343062584230778
+          rid: 6392343062584230815
         maxRange: 140
-    - rid: 6392343062584230774
+    - rid: 6392343062584230811
       type: {class: IsAtSpawnConditional, ns: AI.Maria.Behaviour, asm: Assembly-CSharp}
       data:
         graphPosition:
@@ -1734,9 +1734,9 @@ MonoBehaviour:
         description: 
         dontReEvaluateOnRunning: 0
         child:
-          rid: 6392343062584230779
+          rid: 6392343062584230816
         maxAcceptableDistanceFromSpawn: 0.02
-    - rid: 6392343062584230775
+    - rid: 6392343062584230812
       type: {class: ReturnToSpawnAction, ns: AI.Maria.Behaviour, asm: Assembly-CSharp}
       data:
         graphPosition:
@@ -1747,7 +1747,7 @@ MonoBehaviour:
           height: 117
         description: 
         moveSpeed: 5
-    - rid: 6392343062584230776
+    - rid: 6392343062584230813
       type: {class: TauntAction, ns: AI.Maria.Behaviour, asm: Assembly-CSharp}
       data:
         graphPosition:
@@ -1758,7 +1758,7 @@ MonoBehaviour:
           height: 117
         description: 
         anim: {fileID: -203655887218126122, guid: cc93477071edb1a4081eb998ea6aedff, type: 3}
-    - rid: 6392343062584230777
+    - rid: 6392343062584230814
       type: {class: Sequence, ns: UniBT, asm: UniBT}
       data:
         graphPosition:
@@ -1769,11 +1769,11 @@ MonoBehaviour:
           height: 163
         description: 
         children:
-        - rid: 6392343062584230780
-        - rid: 6392343062584230781
-        - rid: 6392343062584230782
+        - rid: 6392343062584230817
+        - rid: 6392343062584230818
+        - rid: 6392343062584230819
         abortOnConditionChanged: 1
-    - rid: 6392343062584230778
+    - rid: 6392343062584230815
       type: {class: Selector, ns: UniBT, asm: UniBT}
       data:
         graphPosition:
@@ -1784,9 +1784,9 @@ MonoBehaviour:
           height: 115
         description: 
         children:
-        - rid: 6392343062584230783
+        - rid: 6392343062584230820
         abortOnConditionChanged: 1
-    - rid: 6392343062584230779
+    - rid: 6392343062584230816
       type: {class: IdleAction, ns: AI.Maria.Behaviour, asm: Assembly-CSharp}
       data:
         graphPosition:
@@ -1796,7 +1796,7 @@ MonoBehaviour:
           width: 103
           height: 97
         description: 
-    - rid: 6392343062584230780
+    - rid: 6392343062584230817
       type: {class: FaceTargetAction, ns: AI.Maria.Behaviour, asm: Assembly-CSharp}
       data:
         graphPosition:
@@ -1806,7 +1806,7 @@ MonoBehaviour:
           width: 148
           height: 97
         description: 
-    - rid: 6392343062584230781
+    - rid: 6392343062584230818
       type: {class: Random, ns: UniBT, asm: UniBT}
       data:
         graphPosition:
@@ -1817,13 +1817,13 @@ MonoBehaviour:
           height: 217
         description: 
         children:
-        - rid: 6392343062584230784
-        - rid: 6392343062584230785
-        - rid: 6392343062584230786
-        - rid: 6392343062584230787
-        - rid: 6392343062584230788
-        - rid: 6392343062584230789
-    - rid: 6392343062584230782
+        - rid: 6392343062584230821
+        - rid: 6392343062584230822
+        - rid: 6392343062584230823
+        - rid: 6392343062584230824
+        - rid: 6392343062584230825
+        - rid: 6392343062584230826
+    - rid: 6392343062584230819
       type: {class: Random, ns: UniBT, asm: UniBT}
       data:
         graphPosition:
@@ -1834,9 +1834,9 @@ MonoBehaviour:
           height: 121
         description: 
         children:
-        - rid: 6392343062584230790
-        - rid: 6392343062584230791
-    - rid: 6392343062584230783
+        - rid: 6392343062584230827
+        - rid: 6392343062584230828
+    - rid: 6392343062584230820
       type: {class: Random, ns: UniBT, asm: UniBT}
       data:
         graphPosition:
@@ -1847,11 +1847,11 @@ MonoBehaviour:
           height: 169
         description: 
         children:
-        - rid: 6392343062584230792
-        - rid: 6392343062584230793
-        - rid: 6392343062584230794
-        - rid: 6392343062584230795
-    - rid: 6392343062584230784
+        - rid: 6392343062584230829
+        - rid: 6392343062584230830
+        - rid: 6392343062584230831
+        - rid: 6392343062584230832
+    - rid: 6392343062584230821
       type: {class: AttackAction, ns: AI.Maria.Behaviour, asm: Assembly-CSharp}
       data:
         graphPosition:
@@ -1906,7 +1906,7 @@ MonoBehaviour:
           m_RotationOrder: 4
         animationHashParams: IsFullCombo
         easing: 3
-    - rid: 6392343062584230785
+    - rid: 6392343062584230822
       type: {class: AttackAction, ns: AI.Maria.Behaviour, asm: Assembly-CSharp}
       data:
         graphPosition:
@@ -1930,8 +1930,8 @@ MonoBehaviour:
             inWeight: 0
             outWeight: 0
           - serializedVersion: 3
-            time: 1
-            value: 1
+            time: 0.20169067
+            value: 0.5
             inSlope: 0
             outSlope: 0
             tangentMode: 0
@@ -1943,7 +1943,7 @@ MonoBehaviour:
           m_RotationOrder: 4
         animationHashParams: IsSecondAttack
         easing: 3
-    - rid: 6392343062584230786
+    - rid: 6392343062584230823
       type: {class: AttackAction, ns: AI.Maria.Behaviour, asm: Assembly-CSharp}
       data:
         graphPosition:
@@ -1980,7 +1980,7 @@ MonoBehaviour:
           m_RotationOrder: 4
         animationHashParams: IsSpinKick
         easing: 3
-    - rid: 6392343062584230787
+    - rid: 6392343062584230824
       type: {class: AttackAction, ns: AI.Maria.Behaviour, asm: Assembly-CSharp}
       data:
         graphPosition:
@@ -2017,7 +2017,7 @@ MonoBehaviour:
           m_RotationOrder: 4
         animationHashParams: IsSpinAttack
         easing: 3
-    - rid: 6392343062584230788
+    - rid: 6392343062584230825
       type: {class: AttackAction, ns: AI.Maria.Behaviour, asm: Assembly-CSharp}
       data:
         graphPosition:
@@ -2054,7 +2054,7 @@ MonoBehaviour:
           m_RotationOrder: 4
         animationHashParams: IsForwardKick
         easing: 3
-    - rid: 6392343062584230789
+    - rid: 6392343062584230826
       type: {class: AttackAction, ns: AI.Maria.Behaviour, asm: Assembly-CSharp}
       data:
         graphPosition:
@@ -2091,7 +2091,7 @@ MonoBehaviour:
           m_RotationOrder: 4
         animationHashParams: IsFinalAttack
         easing: 3
-    - rid: 6392343062584230790
+    - rid: 6392343062584230827
       type: {class: Selector, ns: UniBT, asm: UniBT}
       data:
         graphPosition:
@@ -2102,10 +2102,10 @@ MonoBehaviour:
           height: 139
         description: 
         children:
-        - rid: 6392343062584230796
-        - rid: 6392343062584230797
+        - rid: 6392343062584230833
+        - rid: 6392343062584230834
         abortOnConditionChanged: 1
-    - rid: 6392343062584230791
+    - rid: 6392343062584230828
       type: {class: RollAction, ns: AI.Maria.Behaviour, asm: Assembly-CSharp}
       data:
         graphPosition:
@@ -2168,7 +2168,7 @@ MonoBehaviour:
           m_PostInfinity: 2
           m_RotationOrder: 4
         easing: 3
-    - rid: 6392343062584230792
+    - rid: 6392343062584230829
       type: {class: StrafeLeftAroundTargetAction, ns: AI.Maria.Behaviour, asm: Assembly-CSharp}
       data:
         graphPosition:
@@ -2180,7 +2180,7 @@ MonoBehaviour:
         description: 
         strafeAngle: -50
         strafeSpeed: 2.75
-    - rid: 6392343062584230793
+    - rid: 6392343062584230830
       type: {class: StrafeRightAroundTargetAction, ns: AI.Maria.Behaviour, asm: Assembly-CSharp}
       data:
         graphPosition:
@@ -2192,7 +2192,7 @@ MonoBehaviour:
         description: 
         strafeAngle: 50
         strafeSpeed: 2.75
-    - rid: 6392343062584230794
+    - rid: 6392343062584230831
       type: {class: ShouldEnterConditional, ns: AI.Maria.Behaviour, asm: Assembly-CSharp}
       data:
         graphPosition:
@@ -2204,9 +2204,9 @@ MonoBehaviour:
         description: might as well lower the odd if AI rolls too frequently
         dontReEvaluateOnRunning: 1
         child:
-          rid: 6392343062584230798
+          rid: 6392343062584230835
         odd: 0.4
-    - rid: 6392343062584230795
+    - rid: 6392343062584230832
       type: {class: SprintTowardTargetAction, ns: AI.Maria.Behaviour, asm: Assembly-CSharp}
       data:
         graphPosition:
@@ -2218,7 +2218,7 @@ MonoBehaviour:
         description: Sprint till close to target (very fast xD)
         maxAcceptableDistanceFromTargetToStopSprint: 5
         moveSpeed: 5
-    - rid: 6392343062584230796
+    - rid: 6392343062584230833
       type: {class: IsTargetRightSideConditional, ns: AI.Maria.Behaviour, asm: Assembly-CSharp}
       data:
         graphPosition:
@@ -2230,8 +2230,8 @@ MonoBehaviour:
         description: 
         dontReEvaluateOnRunning: 1
         child:
-          rid: 6392343062584230799
-    - rid: 6392343062584230797
+          rid: 6392343062584230836
+    - rid: 6392343062584230834
       type: {class: TurnLeftAction, ns: AI.Maria.Behaviour, asm: Assembly-CSharp}
       data:
         graphPosition:
@@ -2242,7 +2242,7 @@ MonoBehaviour:
           height: 117
         description: 
         turnTime: 1
-    - rid: 6392343062584230798
+    - rid: 6392343062584230835
       type: {class: RollAction, ns: AI.Maria.Behaviour, asm: Assembly-CSharp}
       data:
         graphPosition:
@@ -2305,7 +2305,7 @@ MonoBehaviour:
           m_PostInfinity: 2
           m_RotationOrder: 4
         easing: 3
-    - rid: 6392343062584230799
+    - rid: 6392343062584230836
       type: {class: TurnRightAction, ns: AI.Maria.Behaviour, asm: Assembly-CSharp}
       data:
         graphPosition:
