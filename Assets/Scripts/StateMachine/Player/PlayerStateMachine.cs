@@ -35,10 +35,11 @@ public class PlayerStateMachine : StateMachine
     public float maxLockOnRangeBeforeCancel = 140f; // distance via sqrmagnitude
     private Collider[] hitColliders = new Collider[3];
     [HideInInspector] public Transform lockOnTarget;
-    
+
     public void AssignCamera(GameObject followPlayerCamera){
         this.cinemachineVirtualCamera = followPlayerCamera;
     }
+
 
     private void Start(){
         yaw = cinemachineVirtualCamera.transform.rotation.eulerAngles.y;
@@ -138,4 +139,5 @@ public class PlayerStateMachine : StateMachine
         Gizmos.color = Color.yellow;
         Gizmos.DrawSphere(transform.position,targetLockOnRadius);
     }
+
 }

@@ -8,7 +8,7 @@ namespace FSM.Action{
         private readonly int attack2Hash = Animator.StringToHash("Slash2");
         private const float crossFadeDuration = .25f;
         private AttackSequence attackSequence = AttackSequence.Attack2;
-        private float easingCurve = 0.45f;
+        private float easingCurve = 5f;
         private float recommendSpeed = 1.45f;
         private float animLength;
         private AnimationCurve curve;

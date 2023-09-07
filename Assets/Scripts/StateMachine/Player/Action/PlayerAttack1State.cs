@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace FSM.Action{
     public class PlayerAttack1State : PlayerBaseState
@@ -8,7 +9,7 @@ namespace FSM.Action{
         private readonly int attack1Hash = Animator.StringToHash("Slash1");
         private const float crossFadeDuration = .25f;
         private AttackSequence attackSequence = AttackSequence.Attack1;
-        private float easingCurve = 0.25f;
+        private float easingCurve = 5f;
         private float recommendSpeed = 1.40f;
         private float animLength;
         private AnimationCurve curve;

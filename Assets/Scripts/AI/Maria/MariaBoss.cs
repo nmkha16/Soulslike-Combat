@@ -3,11 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace AI.Maria{
-    public class MariaBoss : MonoBehaviour
+    public class MariaBoss : MonoBehaviour, IDamagable
     {
         [SerializeField] private CharacterController characterController;
         [SerializeField] private Animator animator;
         [HideInInspector] public Vector3 spawnPosition {get; private set;}
+
+        private int health;
+        public int Health { 
+            get {
+                return health;
+            }
+            set{
+                health = value;
+            }
+        }
+
         [Header("Properties")]
         public Vector3 velocity;
         [SerializeField] private float lookRotationDampFactor = 10f;
@@ -26,6 +37,7 @@ namespace AI.Maria{
                 animator = GetComponent<Animator>();
             }
             spawnPosition = transform.position;
+            health = 100;
         }
 
         public void FaceMoveDirection(){
@@ -96,5 +108,12 @@ namespace AI.Maria{
             velocity.z = strafeDir.z * strafeSpeed;
         }
 
+        public void TakeDamage(int amount)
+        {
+            this.Health -= amount;
+            Debug.Log("ouch");
+            // play hit animation
+            
+        }
     }
 }
