@@ -3195,6 +3195,14 @@ PrefabInstance:
       value: 3.75
       objectReference: {fileID: 0}
     - target: {fileID: 4990625446118918178, guid: 840ac56c487af2245a7bb20766738ed7, type: 3}
+      propertyPath: managedReferences[6392343069340205418].iframeNums
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4990625446118918178, guid: 840ac56c487af2245a7bb20766738ed7, type: 3}
+      propertyPath: managedReferences[6392343069340205427].iframeNums
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4990625446118918178, guid: 840ac56c487af2245a7bb20766738ed7, type: 3}
       propertyPath: managedReferences[6392343069340205296].description
       value: 
       objectReference: {fileID: 0}

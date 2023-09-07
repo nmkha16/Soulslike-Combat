@@ -15,7 +15,6 @@ namespace FSM.Action{
         private AnimationCurve curve;
         private float elapsed = 0f;
         private bool shouldEnterNextAttack;
-
         private float startHitbox,endHitbox;
 
         public PlayerAttack1State(PlayerStateMachine playerStateMachine) : base(playerStateMachine)

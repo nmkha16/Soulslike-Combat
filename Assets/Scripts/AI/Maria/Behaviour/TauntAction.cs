@@ -40,6 +40,7 @@ namespace AI.Maria.Behaviour{
         }
 
         public override void Abort(){
+            elapsed = 0f;
             animator.SetBool(isTauntHash,false);
         }
     }

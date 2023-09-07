@@ -6,7 +6,9 @@ using UniBT;
 namespace AI.Maria.Behaviour{
     public class CheckTargetInRangeAction : Action
     {
+        private readonly int isNeutralHash = Animator.StringToHash("IsNeutral");
         private MariaBoss maria;
+        private Animator animator;
         private Transform transform;
         private LayerMask targetLayerMask;
         [SerializeField] private float radius = 8f;
@@ -14,8 +16,9 @@ namespace AI.Maria.Behaviour{
         private Collider[] hitColliders = new Collider[1];
 
         public override void Awake() {
-            transform = gameObject.transform;
             maria = gameObject.GetComponent<MariaBoss>();
+            animator = gameObject.GetComponent<Animator>();
+            transform = gameObject.transform;
         }
 
         public override void Start(){
@@ -34,6 +37,7 @@ namespace AI.Maria.Behaviour{
                 
                 maria.target = null;
                 maria.isInCombat = false;
+                animator.SetBool(isNeutralHash,false);
                 return Status.Failure;
             }
 
@@ -49,6 +53,7 @@ namespace AI.Maria.Behaviour{
                 maria.isInCombat = true;
                 maria.target = target.transform;
                 maria.shouldTaunt = true;
+                animator.SetBool(isNeutralHash,false);
                 return Status.Success;
             }
         }

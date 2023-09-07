@@ -35,6 +35,5 @@ namespace AI.Maria.Behaviour{
             animator.SetFloat(moveSpeedHash,1f,animationDampTime,Time.deltaTime);
             return Status.Running;
         }
-
     }
 }

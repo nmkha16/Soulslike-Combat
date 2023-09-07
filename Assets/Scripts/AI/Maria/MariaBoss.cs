@@ -117,9 +117,18 @@ namespace AI.Maria{
 
         public void TakeDamage(int amount)
         {
-            isOnHit = true;
+            gameObject.layer = ignoreRaycastLayer;
+            isOnHit = true; // isOnHit true will trigger conditional to on hit
             health -= amount;
-            // isOnHit true will trigger conditional to on hit
+            // TODO: update health bar
+        }
+
+        public void ExitIgnoreRaycastLayer(){
+            gameObject.layer = defaultLayerMask;
+        }
+
+        public void ToggleInvincibility(bool toggle){
+            gameObject.layer = toggle ? ignoreRaycastLayer : defaultLayerMask;
         }
     }
 }

@@ -13,11 +13,13 @@ namespace AI.Maria.Behaviour{
         [SerializeField] private AnimationCurve curve;
         [SerializeField] private float easing = 3f;
         [SerializeField] private float recommendSpeed = 1.25f;
+        [SerializeField] private int iframeNums = 10;
         private Animator animator;
         private MariaBoss maria;
         private Transform transform;
         private float animLength;
         private float elapsed = 0f;
+        private int iframeCount = 0;
         private Vector3 rollDirection;
         public override void Awake(){
             maria = gameObject.GetComponent<MariaBoss>();
@@ -32,10 +34,20 @@ namespace AI.Maria.Behaviour{
 
         protected override Status OnUpdate()
         {
+            iframeCount++;
+            if (iframeCount <= iframeNums){
+                maria.ToggleInvincibility(true);
+            }
+            else{
+                maria.ToggleInvincibility(false);
+            }
+
+
             animator.SetFloat(animMultiplierHash,recommendSpeed);
             elapsed += Time.deltaTime;
             if (elapsed >= animLength){
                 elapsed = 0f;
+                iframeCount = 0;
                 animator.SetBool(isRollHash, false);
                 animator.SetFloat(animMultiplierHash,10f);
                 DecideRollDirection();
@@ -51,6 +63,8 @@ namespace AI.Maria.Behaviour{
         }
 
         public override void Abort(){
+            iframeCount = 0;
+            elapsed = 0f;
             animator.SetFloat(animMultiplierHash,1f);
             animator.SetBool(isRollHash,false);
         }

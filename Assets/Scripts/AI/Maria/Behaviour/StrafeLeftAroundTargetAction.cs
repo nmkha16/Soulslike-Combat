@@ -33,11 +33,14 @@ namespace AI.Maria.Behaviour{
             maria.FaceTarget();
             maria.Move();
 
-            animator.SetBool(isNeutralHash,false);
             animator.SetFloat(moveXHash,-1f,animationDampTime,Time.deltaTime);
             animator.SetFloat(moveYHash,0f,animationDampTime,Time.deltaTime);
 
             return Status.Running;
+        }
+
+        public override void Abort(){
+            elapsed = 0f;
         }
     }
 }

@@ -6,7 +6,6 @@ using UniBT;
 namespace AI.Maria.Behaviour{
     public class StrafeRightAroundTargetAction : Action
     {
-        private readonly int isNeutralHash = Animator.StringToHash("IsNeutral");
         private readonly int moveXHash = Animator.StringToHash("MoveX");
         private readonly int moveYHash = Animator.StringToHash("MoveY");
         private const float animationDampTime = 0.25f;
@@ -33,11 +32,13 @@ namespace AI.Maria.Behaviour{
             maria.FaceTarget();
             maria.Move();
 
-            animator.SetBool(isNeutralHash,false);
             animator.SetFloat(moveXHash,1f,animationDampTime,Time.deltaTime);
             animator.SetFloat(moveYHash,0f,animationDampTime,Time.deltaTime);
 
             return Status.Running;
+        }
+        public override void Abort(){
+            elapsed = 0f;
         }
     }
 }

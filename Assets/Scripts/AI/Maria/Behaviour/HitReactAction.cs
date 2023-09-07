@@ -23,6 +23,7 @@ namespace AI.Maria.Behaviour{
             if (elapsed > hitReactDuration){
                 elapsed = 0f;
                 maria.isOnHit = false;
+                maria.ExitIgnoreRaycastLayer();
                 animator.SetBool(isOnHitHash, false);
                 return Status.Success;
             }

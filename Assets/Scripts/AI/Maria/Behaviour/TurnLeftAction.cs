@@ -29,6 +29,7 @@ namespace AI.Maria.Behaviour{
             return Status.Running;
         }
         public override void Abort(){
+            elapsed = 0f;
             animator.SetBool(isLeftTurnHash,false);    
         }
     }
