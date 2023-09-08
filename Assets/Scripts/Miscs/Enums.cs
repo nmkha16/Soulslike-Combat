@@ -11,6 +11,12 @@ public enum MovementSequence{
     Roll
 }
 
+public enum DefenseSequence{
+    Parry,
+    Block,
+    Exit_Block,
+}
+
 public enum MariaAttackType{
     Sword,
     KickLeft,

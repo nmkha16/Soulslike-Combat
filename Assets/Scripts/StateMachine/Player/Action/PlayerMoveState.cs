@@ -15,7 +15,6 @@ namespace FSM.Action{
 
         public override void Enter()
         {
-            playerStateMachine.velocity.y = Physics.gravity.y;
             playerStateMachine.animator.CrossFadeInFixedTime(moveBlendTreeHash,crossFadeDuration);
             playerStateMachine.inputReader.OnJumpPerformed += SwitchToJumpState;
             playerStateMachine.inputReader.OnAttackPerformed += SwitchToAttack1State;
@@ -26,8 +25,10 @@ namespace FSM.Action{
         public override void Tick()
         {
             if (!playerStateMachine.characterController.isGrounded){
-                playerStateMachine.SwitchState(new PlayerFallState(playerStateMachine));
+                SwitchToFallState();
             }
+            
+            ApplyGravity();
             CalculateMoveDirection();
             FaceMoveDirection();
             Move();
@@ -47,23 +48,18 @@ namespace FSM.Action{
             playerStateMachine.inputReader.OnRollPerformed -= SwitchToRollState;
         }
 
-        private void SwitchToJumpState(){
-            playerStateMachine.SwitchState(new PlayerJumpState(playerStateMachine));
-        }
-
         private void SwitchToAttack1State(){
             if (playerStateMachine.isRunning && playerStateMachine.inputReader.moveComposite.sqrMagnitude > 0){
                 playerStateMachine.SwitchState(new PlayerRunningAttackState(playerStateMachine));
             }
             else playerStateMachine.SwitchState(new PlayerAttack1State(playerStateMachine));
         }
-        
-        private void SwitchToHeavyAttackState(){
-            playerStateMachine.SwitchState(new PlayerHeavyAttackState(playerStateMachine));
-        }
 
-        private void SwitchToRollState(){
-            playerStateMachine.SwitchState(new PlayerRollState(playerStateMachine));
+        protected override void SwitchToHeavyAttackState(){
+            // player can perform heavy attack if only they are not running
+            if (playerStateMachine.inputReader.moveComposite.sqrMagnitude == 0){
+                playerStateMachine.SwitchState(new PlayerHeavyAttackState(playerStateMachine));
+            }
         }
     }
 }

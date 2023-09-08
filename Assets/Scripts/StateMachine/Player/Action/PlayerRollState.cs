@@ -25,12 +25,16 @@ namespace FSM.Action{
         {
             playerStateMachine.animator.CrossFadeInFixedTime(rollHash, crossFadeDuration);
             playerStateMachine.animator.SetFloat(animMultiplier,recommendSpeed);
-            animLength = playerStateMachine.animationAnimationClips[(int)movementSequence].anim.length / recommendSpeed;
-            curve = playerStateMachine.animationAnimationClips[(int)movementSequence].curve;
+            animLength = playerStateMachine.movementAnimationClips[(int)movementSequence].anim.length / recommendSpeed;
+            curve = playerStateMachine.movementAnimationClips[(int)movementSequence].curve;
+        
             moveCompositeSnapshot = playerStateMachine.inputReader.moveComposite;
+            if (moveCompositeSnapshot.sqrMagnitude == 0){
+                moveCompositeSnapshot = Vector2.up;
+            }
 
-            percentTimeOfStartIframe = playerStateMachine.animationAnimationClips[(int)movementSequence].percentTimeOfStartHitbox;
-            percentTimeOfEndIframe = playerStateMachine.animationAnimationClips[(int)movementSequence].percentTimeOfEndHitbox;
+            percentTimeOfStartIframe = playerStateMachine.movementAnimationClips[(int)movementSequence].percentTimeOfStartHitbox;
+            percentTimeOfEndIframe = playerStateMachine.movementAnimationClips[(int)movementSequence].percentTimeOfEndHitbox;
 
         }
 
@@ -50,7 +54,7 @@ namespace FSM.Action{
             FaceMoveDirection();
             Move();
 
-            if (elapsed > animLength * 0.9f){
+            if (elapsed > animLength){
                 if (playerStateMachine.inputReader.isLockedOnTarget){
                     playerStateMachine.SwitchState(new PlayerLockOnState(playerStateMachine));
                     return;

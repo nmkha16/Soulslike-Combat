@@ -23,6 +23,14 @@ namespace FSM.Action{
         {
             elapsed += Time.deltaTime;
 
+
+            if (!playerStateMachine.characterController.isGrounded){
+                SwitchToFallState();
+            }
+
+            ApplyGravity();
+            Move();
+
             if (elapsed > waitTime){
                 if (playerStateMachine.inputReader.isLockedOnTarget){
                     playerStateMachine.SwitchState(new PlayerLockOnState(playerStateMachine));

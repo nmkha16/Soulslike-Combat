@@ -20,6 +20,11 @@ public class MovementAnimation{
 }
 
 [Serializable]
+public class DefenseAnimation{
+    public AnimationClip anim;
+}
+
+[Serializable]
 public class MariaAttackCooldown{
     public MariaAttackType attackType;
     public float cooldown;

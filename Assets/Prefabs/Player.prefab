@@ -92,8 +92,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18c76c48396551d45bfafb7a0fdfa94a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 200
   velocity: {x: 0, y: 0, z: 0}
-  animationAnimationClips:
+  attackAnimationClips:
   - anim: {fileID: -203655887218126122, guid: 36c80aa6d69392949916b49d881426e1, type: 3}
     curve:
       serializedVersion: 2
@@ -347,6 +348,13 @@ MonoBehaviour:
       m_RotationOrder: 4
     percentTimeOfStartHitbox: 0
     percentTimeOfEndHitbox: 0.3
+  defenseAnimationClips:
+  - anim: {fileID: -203655887218126122, guid: 0f0a2f2518a9116428748ec5e24e4052, type: 3}
+  - anim: {fileID: -203655887218126122, guid: aab72d41afc1cf44cb018cf4c205d74e, type: 3}
+  - anim: {fileID: -203655887218126122, guid: df32a405ad85b054a949e66c070fbbc3, type: 3}
+  isTakenDamge: 0
+  isParrying: 0
+  isBlocking: 0
   targetLayerMask:
     serializedVersion: 2
     m_Bits: 64

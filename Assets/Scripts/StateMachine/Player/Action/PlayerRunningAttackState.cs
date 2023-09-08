@@ -21,14 +21,20 @@ namespace FSM.Action{
         {
             playerStateMachine.animator.CrossFadeInFixedTime(heavyAttack,crossFadeDuration);
             playerStateMachine.animator.SetFloat(animMultiplier,recommendSpeed);
-            animLength = playerStateMachine.animationAnimationClips[(int)attackSequence].anim.length / recommendSpeed;
-            curve = playerStateMachine.animationAnimationClips[(int)attackSequence].curve;
+            animLength = playerStateMachine.attackAnimationClips[(int)attackSequence].anim.length / recommendSpeed;
+            curve = playerStateMachine.attackAnimationClips[(int)attackSequence].curve;
         }
 
         public override void Tick()
         {
             elapsed += Time.deltaTime;
 
+            
+            if (!playerStateMachine.characterController.isGrounded){
+                SwitchToFallState();
+            }
+            
+            ApplyGravity();
             // push player forward on last string of attack
             CalculateMoveDirection(elapsed, curve, easing: easingCurve);
             FaceMoveDirection();

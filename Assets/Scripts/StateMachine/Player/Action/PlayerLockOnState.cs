@@ -18,12 +18,12 @@ namespace FSM.Action{
 
         public override void Enter()
         {
-            playerStateMachine.velocity.y = Physics.gravity.y;
             playerStateMachine.animator.CrossFadeInFixedTime(lockOnMoveBlendTreeHash,crossFadeDuration);
             playerStateMachine.inputReader.OnAttackPerformed += SwitchToAttack1State;
             playerStateMachine.inputReader.OnHeavyAttackPerformed += SwitchToHeavyAttackState;
             playerStateMachine.inputReader.OnLockedOnPerformed += ValidateLockOnState;
             playerStateMachine.inputReader.OnRollPerformed += SwitchToRollState;
+            playerStateMachine.inputReader.OnBlockPerformed += SwitchToParryState;
         }
 
         public override void Tick()
@@ -36,8 +36,13 @@ namespace FSM.Action{
                 playerStateMachine.CancelLockOnState();
                 SwitchToMoveState();
             }
+            
+            if (!playerStateMachine.characterController.isGrounded){
+                SwitchToFallState();
+            }
 
-            CalculateMoveDirection();
+            ApplyGravity();
+            CalculateMoveDirection(deltaLockOnSpeedReductionMultiplier);
             FaceTargetDirection(playerStateMachine.lockOnTarget);
             Move();
 
@@ -51,26 +56,11 @@ namespace FSM.Action{
             playerStateMachine.inputReader.OnHeavyAttackPerformed -= SwitchToHeavyAttackState;
             playerStateMachine.inputReader.OnLockedOnPerformed -= ValidateLockOnState;
             playerStateMachine.inputReader.OnRollPerformed -= SwitchToRollState;
-
-        }
-
-        protected override void CalculateMoveDirection(){
-            Vector3 camForward = new Vector3(playerStateMachine.mainCamera.transform.forward.x, 0, playerStateMachine.mainCamera.transform.forward.z);
-            Vector3 camRight = new Vector3(playerStateMachine.mainCamera.transform.right.x, 0, playerStateMachine.mainCamera.transform.right.z);
-
-            Vector3 moveDirection = camForward.normalized * playerStateMachine.inputReader.moveComposite.y + camRight.normalized * playerStateMachine.inputReader.moveComposite.x;
-            
-            playerStateMachine.velocity.x = moveDirection.x * playerStateMachine.moveSpeed * deltaLockOnSpeedReductionMultiplier;
-            playerStateMachine.velocity.z = moveDirection.z * playerStateMachine.moveSpeed * deltaLockOnSpeedReductionMultiplier;
-
+            playerStateMachine.inputReader.OnBlockPerformed -= SwitchToParryState;
         }
 
         private void SwitchToAttack1State(){
             playerStateMachine.SwitchState(new PlayerAttack1State(playerStateMachine));
-        }
-
-        private void SwitchToHeavyAttackState(){
-            playerStateMachine.SwitchState(new PlayerHeavyAttackState(playerStateMachine));
         }
 
         private void ValidateLockOnState(){
@@ -78,16 +68,8 @@ namespace FSM.Action{
             SwitchToMoveState();
         }
 
-        private void SwitchToMoveState(){
-            playerStateMachine.SwitchState(new PlayerMoveState(playerStateMachine));
-        }
-
-        private bool IsLockOnTargetOutOfRange(){
-            return (playerStateMachine.lockOnTarget.position - playerStateMachine.transform.position).sqrMagnitude > playerStateMachine.maxLockOnRangeBeforeCancel;
-        }
-
-        private void SwitchToRollState(){
-            playerStateMachine.SwitchState(new PlayerRollState(playerStateMachine));
+        private void SwitchToParryState(){
+            playerStateMachine.SwitchState(new PlayerParryState(playerStateMachine));
         }
     }
 

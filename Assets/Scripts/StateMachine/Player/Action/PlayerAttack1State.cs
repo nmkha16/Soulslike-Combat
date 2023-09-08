@@ -28,11 +28,11 @@ namespace FSM.Action{
             playerStateMachine.inputReader.OnAttackPerformed += EnterNextAttackSequence;
             playerStateMachine.animator.CrossFadeInFixedTime(attack1Hash,crossFadeDuration);
             playerStateMachine.animator.SetFloat(animMultiplier,recommendSpeed);
-            animLength = playerStateMachine.animationAnimationClips[(int)attackSequence].anim.length / recommendSpeed;
-            curve = playerStateMachine.animationAnimationClips[(int)attackSequence].curve;
+            animLength = playerStateMachine.attackAnimationClips[(int)attackSequence].anim.length / recommendSpeed;
+            curve = playerStateMachine.attackAnimationClips[(int)attackSequence].curve;
 
-            percentTimeOfStartHitbox = playerStateMachine.animationAnimationClips[(int)attackSequence].percentTimeOfStartHitbox;
-            percentTimeOfEndHitbox = playerStateMachine.animationAnimationClips[(int)attackSequence].percentTimeOfEndHitbox;
+            percentTimeOfStartHitbox = playerStateMachine.attackAnimationClips[(int)attackSequence].percentTimeOfStartHitbox;
+            percentTimeOfEndHitbox = playerStateMachine.attackAnimationClips[(int)attackSequence].percentTimeOfEndHitbox;
 
             startHitbox = animLength * percentTimeOfStartHitbox;
             endHitbox = animLength * percentTimeOfEndHitbox;
@@ -49,6 +49,11 @@ namespace FSM.Action{
                 playerStateMachine.ToggleWeaponHitbox(false);
             }
 
+            if (!playerStateMachine.characterController.isGrounded){
+                SwitchToFallState();
+            }
+
+
             CalculateMoveDirection(elapsed, curve, easing: easingCurve);
             FaceMoveDirection();
             Move();
@@ -60,10 +65,10 @@ namespace FSM.Action{
 
             if (elapsed > animLength * 0.9f){
                 if (playerStateMachine.inputReader.isLockedOnTarget){
-                    playerStateMachine.SwitchState(new PlayerLockOnState(playerStateMachine));
+                    SwitchToLockOnState();
                     return;
                 }
-                playerStateMachine.SwitchState(new PlayerMoveState(playerStateMachine));
+                SwitchToMoveState();
             }
 
         }

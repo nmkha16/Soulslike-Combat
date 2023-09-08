@@ -22,9 +22,11 @@ public class PlayerStateMachine : StateMachine, IDamagable
     public CharacterController characterController {get; private set;}
 
     [Header("Attack Animation Clips")]
-    public List<AttackAnimation> animationAnimationClips;
+    public List<AttackAnimation> attackAnimationClips;
     [Header("Movement Animation Clips")]
     public List<AttackAnimation> movementAnimationClips;
+    [Header("Defense Animation Clip")]
+    public List<DefenseAnimation> defenseAnimationClips;
     [Header("Camera")]
     private GameObject cinemachineVirtualCamera;
     private float yaw, pitch;
@@ -38,7 +40,10 @@ public class PlayerStateMachine : StateMachine, IDamagable
             this.health = value;
         }
     }
+    [Header("This field has nothing to do with Input Reader")]
     public bool isTakenDamge;
+    public bool isParrying;
+    public bool isBlocking;
 
     [Header("Target Layer")]
     public LayerMask targetLayerMask;

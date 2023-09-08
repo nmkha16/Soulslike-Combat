@@ -15,8 +15,10 @@ public class InputReader : MonoBehaviour, Controls.IPlayerActions
     public Action OnHeavyAttackPerformed;
     public Action OnLockedOnPerformed;
     public Action OnRollPerformed;
+    public Action OnBlockPerformed;
     public bool isRunning;
     public bool isLockedOnTarget;
+    public bool isHoldingBlock;
     private Controls controls;
 
     private void OnEnable() {
@@ -75,5 +77,21 @@ public class InputReader : MonoBehaviour, Controls.IPlayerActions
     {
         if (!context.performed) return;
         OnRollPerformed?.Invoke();
+    }
+
+    public void OnBlock(InputAction.CallbackContext context)
+    {
+        // button press
+        if (context.started){
+            OnBlockPerformed?.Invoke();
+            isHoldingBlock = true;
+            return;
+        }
+
+        // button release
+        if (context.canceled){
+            OnBlockPerformed?.Invoke();
+            isHoldingBlock = false;
+        }
     }
 }
