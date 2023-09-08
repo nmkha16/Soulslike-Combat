@@ -46,7 +46,7 @@ public class MariaHitDetection : MonoBehaviour
         if (hits != 0){
             for (int i =0 ; i < hits; i++){
                 if (hitColliders[i].TryGetComponent<IDamagable>(out var damagable)){
-                    damagable.TakeDamage(10);
+                    damagable.TakeDamage(this.transform, 10);
                 }
             }
         }

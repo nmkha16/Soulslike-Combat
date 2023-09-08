@@ -179,14 +179,19 @@ public class PlayerStateMachine : StateMachine, IDamagable
         gameObject.layer = toggle ? ignoreRaycastLayerMask : defaultLayerMask;
     }
 
-    public void TakeDamage(int amount)
+    public void TakeDamage(Transform from, int amount)
     {
         if (isTakenDamge) return;
-        if (isBlocking || isParrying){
+
+        if (isBlocking){
             OnBlockedHit?.Invoke();
         }
+        else if (isParrying){
+            if (from.TryGetComponent<IParriable>(out var parriable)){
+                parriable.GetParried();
+            }
+        }
         else{
-            Debug.Log("ouch");
             isTakenDamge = true;
             SwitchToImpactState();
             Health-= amount;
@@ -194,5 +199,9 @@ public class PlayerStateMachine : StateMachine, IDamagable
     }
     protected void SwitchToImpactState(){
         SwitchState(new PlayerImpactState(this));
+    }
+
+    private void SwitchToParryStabState(){
+        SwitchState(new PlayerParryStabState(this));
     }
 }

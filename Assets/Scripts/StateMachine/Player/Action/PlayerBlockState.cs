@@ -6,7 +6,6 @@ namespace FSM.Action{
     public class PlayerBlockState : PlayerBaseState
     {
         private readonly int blockIdleHash = Animator.StringToHash("Block Idle");
-        private readonly int blockToIdleHash = Animator.StringToHash("Block To Idle");
         private const float crossFadeDuration = .2f;
         public PlayerBlockState(PlayerStateMachine playerStateMachine) : base(playerStateMachine)
         {
@@ -46,7 +45,6 @@ namespace FSM.Action{
         public override void Exit()
         {
             //playerStateMachine.isBlocking = false;
-            playerStateMachine.animator.CrossFadeInFixedTime(blockToIdleHash,crossFadeDuration);
             playerStateMachine.OnBlockedHit -= SwitchToBlockedImpactState;
             playerStateMachine.inputReader.OnBlockPerformed -= ExitBlockState;
         }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace AI.Maria{
-    public class MariaBoss : MonoBehaviour, IDamagable
+    public class MariaBoss : MonoBehaviour, IDamagable, IParriable
     {   
         public Action<Transform> OnActivateHitbox; // params are Transform of hit component
         public Action OnEndHitbox;
@@ -22,6 +22,8 @@ namespace AI.Maria{
             }
         }
         public bool isOnHit;
+        public bool isParried;
+        public bool isParryStabbed;
 
         [Header("Properties")]
         public Vector3 velocity;
@@ -122,12 +124,18 @@ namespace AI.Maria{
             velocity.z = strafeDir.z * strafeSpeed;
         }
 
-        public void TakeDamage(int amount)
+        public void TakeDamage(Transform from, int amount)
         {
             gameObject.layer = ignoreRaycastLayer;
             isOnHit = true; // isOnHit true will trigger conditional to on hit
             health -= amount;
             // TODO: update health bar
+
+            // tell the attacker to enter parry stab animation
+            if (isParried){
+                isParryStabbed = true; // will enter parry stabbed anim
+                from.BroadcastMessage("SwitchToParryStabState"); // fix this red flag code
+            }
         }
 
         public void ExitIgnoreRaycastLayer(){
@@ -136,6 +144,11 @@ namespace AI.Maria{
 
         public void ToggleInvincibility(bool toggle){
             gameObject.layer = toggle ? ignoreRaycastLayer : defaultLayerMask;
+        }
+
+        public void GetParried()
+        {
+            isParried = true;
         }
     }
 }

@@ -85,6 +85,15 @@
                     "processors": "",
                     "interactions": "Press(behavior=2)",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Parry",
+                    "type": "Button",
+                    "id": "ff3d8676-020f-412b-a17a-9054dd220a1b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -327,6 +336,28 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Block",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "308e25a4-dd1d-4bea-bec3-72f6584c9f28",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard and Mouse",
+                    "action": "Parry",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b72633e1-b1ec-4fcb-b92c-09ae98cb962f",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Parry",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

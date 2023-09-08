@@ -20,7 +20,7 @@ public class HitDetection : MonoBehaviour
         if (hits != 0){
             for (int i =0 ; i < hits; i++){
                 if (hit[i].transform.TryGetComponent<IDamagable>(out var damagable)){
-                    damagable.TakeDamage(10);
+                    damagable.TakeDamage(this.transform, 10);
                 }
             }
         }

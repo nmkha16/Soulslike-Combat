@@ -34,7 +34,6 @@ namespace FSM.Action{
             Move();
 
             if (elapsed > waitTime){
-                Debug.Log("impact timeout done");
                 if (playerStateMachine.inputReader.isLockedOnTarget){
                     playerStateMachine.isTakenDamge = false;
                     playerStateMachine.ToggleInvincibility(false);

@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
 using UnityEngine;
 
 namespace FSM.Action{
@@ -104,6 +100,10 @@ namespace FSM.Action{
 
         protected void SwitchToBlockState(){
             playerStateMachine.SwitchState(new PlayerBlockState(playerStateMachine));
+        }
+
+        protected void SwitchToParryState(){
+            playerStateMachine.SwitchState(new PlayerParryState(playerStateMachine));
         }
     }
 

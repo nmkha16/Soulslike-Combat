@@ -107,6 +107,15 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Press(behavior=2)"",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Parry"",
+                    ""type"": ""Button"",
+                    ""id"": ""ff3d8676-020f-412b-a17a-9054dd220a1b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -351,6 +360,28 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""action"": ""Block"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""308e25a4-dd1d-4bea-bec3-72f6584c9f28"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and Mouse"",
+                    ""action"": ""Parry"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b72633e1-b1ec-4fcb-b92c-09ae98cb962f"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Parry"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -396,6 +427,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         m_Player_HeavyAttack = m_Player.FindAction("HeavyAttack", throwIfNotFound: true);
         m_Player_Roll = m_Player.FindAction("Roll", throwIfNotFound: true);
         m_Player_Block = m_Player.FindAction("Block", throwIfNotFound: true);
+        m_Player_Parry = m_Player.FindAction("Parry", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -464,6 +496,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_HeavyAttack;
     private readonly InputAction m_Player_Roll;
     private readonly InputAction m_Player_Block;
+    private readonly InputAction m_Player_Parry;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -477,6 +510,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         public InputAction @HeavyAttack => m_Wrapper.m_Player_HeavyAttack;
         public InputAction @Roll => m_Wrapper.m_Player_Roll;
         public InputAction @Block => m_Wrapper.m_Player_Block;
+        public InputAction @Parry => m_Wrapper.m_Player_Parry;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -513,6 +547,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @Block.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBlock;
                 @Block.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBlock;
                 @Block.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBlock;
+                @Parry.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnParry;
+                @Parry.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnParry;
+                @Parry.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnParry;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -544,6 +581,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @Block.started += instance.OnBlock;
                 @Block.performed += instance.OnBlock;
                 @Block.canceled += instance.OnBlock;
+                @Parry.started += instance.OnParry;
+                @Parry.performed += instance.OnParry;
+                @Parry.canceled += instance.OnParry;
             }
         }
     }
@@ -577,5 +617,6 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         void OnHeavyAttack(InputAction.CallbackContext context);
         void OnRoll(InputAction.CallbackContext context);
         void OnBlock(InputAction.CallbackContext context);
+        void OnParry(InputAction.CallbackContext context);
     }
 }

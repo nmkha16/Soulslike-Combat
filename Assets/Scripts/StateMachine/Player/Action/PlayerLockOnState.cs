@@ -23,7 +23,8 @@ namespace FSM.Action{
             playerStateMachine.inputReader.OnHeavyAttackPerformed += SwitchToHeavyAttackState;
             playerStateMachine.inputReader.OnLockedOnPerformed += ValidateLockOnState;
             playerStateMachine.inputReader.OnRollPerformed += SwitchToRollState;
-            playerStateMachine.inputReader.OnBlockPerformed += SwitchToParryState;
+            playerStateMachine.inputReader.OnBlockPerformed += SwitchToBlockState;
+            playerStateMachine.inputReader.OnParryPerformed += SwitchToParryState;
         }
 
         public override void Tick()
@@ -56,7 +57,8 @@ namespace FSM.Action{
             playerStateMachine.inputReader.OnHeavyAttackPerformed -= SwitchToHeavyAttackState;
             playerStateMachine.inputReader.OnLockedOnPerformed -= ValidateLockOnState;
             playerStateMachine.inputReader.OnRollPerformed -= SwitchToRollState;
-            playerStateMachine.inputReader.OnBlockPerformed -= SwitchToParryState;
+            playerStateMachine.inputReader.OnBlockPerformed -= SwitchToBlockState;
+            playerStateMachine.inputReader.OnParryPerformed -= SwitchToParryState;
         }
 
         private void SwitchToAttack1State(){
@@ -66,10 +68,6 @@ namespace FSM.Action{
         private void ValidateLockOnState(){
             if (playerStateMachine.inputReader.isLockedOnTarget) return;
             SwitchToMoveState();
-        }
-
-        private void SwitchToParryState(){
-            playerStateMachine.SwitchState(new PlayerParryState(playerStateMachine));
         }
     }
 

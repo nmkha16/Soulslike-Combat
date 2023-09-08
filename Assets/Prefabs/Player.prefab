@@ -293,6 +293,51 @@ MonoBehaviour:
       m_RotationOrder: 4
     percentTimeOfStartHitbox: 0.42
     percentTimeOfEndHitbox: 0.55
+  - anim: {fileID: 7400000, guid: f0a1d048235da424c8b61620a5ed638e, type: 2}
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.7999981
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.34131318
+        value: 0.43761095
+        inSlope: 0.7499727
+        outSlope: 0.7499727
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7605505
+        value: 0.8028152
+        inSlope: -1.1721079
+        outSlope: -1.1721079
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.114469975
+        outWeight: 0.7962213
+      - serializedVersion: 3
+        time: 1
+        value: 0.0026734984
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    percentTimeOfStartHitbox: 0
+    percentTimeOfEndHitbox: 0
   movementAnimationClips:
   - anim: {fileID: -203655887218126122, guid: ced6239c5f1b4ed42a2e6877eb0c2c3d, type: 3}
     curve:
@@ -349,9 +394,8 @@ MonoBehaviour:
     percentTimeOfStartHitbox: 0
     percentTimeOfEndHitbox: 0.6
   defenseAnimationClips:
-  - anim: {fileID: -203655887218126122, guid: 0f0a2f2518a9116428748ec5e24e4052, type: 3}
   - anim: {fileID: -203655887218126122, guid: aab72d41afc1cf44cb018cf4c205d74e, type: 3}
-  - anim: {fileID: -203655887218126122, guid: df32a405ad85b054a949e66c070fbbc3, type: 3}
+  - anim: {fileID: 7400000, guid: 06a492e9cca46d3499000728ab381451, type: 2}
   isTakenDamge: 0
   isParrying: 0
   isBlocking: 0

@@ -4,7 +4,7 @@ public enum AttackSequence{
     Attack3,
     Heavy_Attack,
     Running_Attack,
-    Roll,
+    Parry_Stab,
 }
 
 public enum MovementSequence{
@@ -12,9 +12,8 @@ public enum MovementSequence{
 }
 
 public enum DefenseSequence{
-    Parry,
     Block,
-    Exit_Block,
+    Parry,
 }
 
 public enum MariaAttackType{

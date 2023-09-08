@@ -7,7 +7,7 @@ namespace FSM.Action{
     {
         private readonly int moveSpeedHash = Animator.StringToHash("MoveSpeed");
         private readonly int moveBlendTreeHash = Animator.StringToHash("MoveBlendTree");
-
+        private readonly int lockOnMoveBlendTreeHash = Animator.StringToHash("LockOnMoveBlendTree");
         private const float animationDampTime = 0.1f;
         private const float crossFadeDuration = 0.2f;
 
@@ -20,10 +20,16 @@ namespace FSM.Action{
             playerStateMachine.inputReader.OnAttackPerformed += SwitchToAttack1State;
             playerStateMachine.inputReader.OnHeavyAttackPerformed += SwitchToHeavyAttackState;
             playerStateMachine.inputReader.OnRollPerformed += SwitchToRollState;
+            playerStateMachine.inputReader.OnParryPerformed += SwitchToParryState;
         }
 
         public override void Tick()
         {
+            // this is band aid, i still cant find out why player return to this state
+            if (IsStillLockingOn()){
+                SwitchToLockOnState();
+            }
+
             if (!playerStateMachine.characterController.isGrounded){
                 SwitchToFallState();
             }
@@ -46,6 +52,7 @@ namespace FSM.Action{
             playerStateMachine.inputReader.OnAttackPerformed -= SwitchToAttack1State;
             playerStateMachine.inputReader.OnHeavyAttackPerformed -= SwitchToHeavyAttackState;
             playerStateMachine.inputReader.OnRollPerformed -= SwitchToRollState;
+            playerStateMachine.inputReader.OnParryPerformed -= SwitchToParryState;
         }
 
         private void SwitchToAttack1State(){
@@ -60,6 +67,10 @@ namespace FSM.Action{
             if (playerStateMachine.inputReader.moveComposite.sqrMagnitude == 0){
                 playerStateMachine.SwitchState(new PlayerHeavyAttackState(playerStateMachine));
             }
+        }
+
+        protected bool IsStillLockingOn(){
+            return playerStateMachine.isLockedOnTarget;
         }
     }
 }
