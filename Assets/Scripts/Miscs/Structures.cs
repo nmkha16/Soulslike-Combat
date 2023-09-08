@@ -29,3 +29,9 @@ public class MariaAttackCooldown{
     public MariaAttackType attackType;
     public float cooldown;
 }
+
+[Serializable]
+public class Sound{
+    public SoundId id;
+    public AudioClip audio;
+}

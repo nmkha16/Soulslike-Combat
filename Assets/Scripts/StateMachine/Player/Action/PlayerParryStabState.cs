@@ -7,7 +7,7 @@ namespace FSM.Action{
     {
         private readonly int parryStabHash = Animator.StringToHash("Parry Stab");
         private const float crossFadeDuration = 0f;
-        private float aboutToStabTime = 0.8f;
+        private float aboutToStabTime = 0.7f;
         private AttackSequence attackSequence = AttackSequence.Parry_Stab;
         private float animLength;
         private float elapsed = 0f;
@@ -27,6 +27,7 @@ namespace FSM.Action{
 
             if (elapsed > aboutToStabTime){
                 playerStateMachine.OnParryExactStab?.Invoke();
+                SoundManager.instance.PlayAudio(SoundId.Parry_Stab);
                 aboutToStabTime = 99f;
             }
 

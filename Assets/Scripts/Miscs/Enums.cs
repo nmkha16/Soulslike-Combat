@@ -28,3 +28,9 @@ public enum RollDirection{
     Forward,
     Backward = 3,
 }
+
+public enum SoundId{
+    Parry,
+    Parry_Stab,
+    
+}

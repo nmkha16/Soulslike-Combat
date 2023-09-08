@@ -30,7 +30,7 @@ namespace FSM.Action{
         public override void Tick()
         {
             if (!playerStateMachine.characterController.isGrounded){
-                playerStateMachine.SwitchState(new PlayerFallState(playerStateMachine));
+                SwitchToFallState();
             }
 
             if (IsLockOnTargetOutOfRange()){

@@ -191,6 +191,7 @@ public class PlayerStateMachine : StateMachine, IDamagable, ICanParryStab
         }
         else if (isParrying){
             if (from.TryGetComponent<IParriable>(out var parriable)){
+                SoundManager.instance.PlayAudio(SoundId.Parry);
                 parriable.GetParried();
             }
         }

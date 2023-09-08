@@ -8,6 +8,7 @@ namespace AI.Maria.Behaviour{
     {
         private readonly int isParryStabbedHash = Animator.StringToHash("IsParryStabbed");
         [SerializeField] private AnimationClip anim;
+        private float aboutToStabTime = 0.8f;
         private MariaBoss maria;
         private Animator animator;
         private float animLength;
@@ -23,8 +24,14 @@ namespace AI.Maria.Behaviour{
         {
             elapsed += Time.deltaTime;
 
+            if (elapsed >= aboutToStabTime){
+                maria.bloodSplatter.SetActive(true);
+                aboutToStabTime = 99f;
+            }
+
             if (elapsed > animLength){
                 elapsed = 0f;
+                aboutToStabTime = .8f;
                 animator.SetBool(isParryStabbedHash,false);
                 maria.isParried = false;
                 maria.isParryStabbed = false;
@@ -38,6 +45,7 @@ namespace AI.Maria.Behaviour{
         }
 
         public override void Abort(){
+            aboutToStabTime = .8f;
             elapsed = 0f;
             maria.isParried = false;
             maria.isParryStabbed = false;

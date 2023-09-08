@@ -6,7 +6,7 @@ namespace FSM.Action{
     public class PlayerParryState : PlayerBaseState
     {
         private readonly int parryHash = Animator.StringToHash("Parry");
-        private const float crossFadeDuration = .25f;
+        private const float crossFadeDuration = .1f;
         private DefenseSequence defenseSequence = DefenseSequence.Parry;
         private float animLength;
         private float elapsed = 0f;
@@ -20,8 +20,6 @@ namespace FSM.Action{
             playerStateMachine.isParrying = true;
             playerStateMachine.animator.CrossFadeInFixedTime(parryHash,crossFadeDuration);
             animLength = playerStateMachine.defenseAnimationClips[(int)defenseSequence].anim.length;
-            playerStateMachine.velocity = Vector3.zero;
-
         }
 
         public override void Tick()
@@ -29,7 +27,7 @@ namespace FSM.Action{
             elapsed += Time.deltaTime;
             frameCount++;
             
-            if (frameCount > 10){
+            if (frameCount > 40){
                 playerStateMachine.isParrying = false;
             }
 
@@ -51,10 +49,7 @@ namespace FSM.Action{
                 }
                 SwitchToMoveState();
             }
-
-            ApplyGravity();
             FaceTargetDirection(playerStateMachine.lockOnTarget);
-            Move();
         }
 
         public override void Exit()

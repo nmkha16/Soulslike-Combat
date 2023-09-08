@@ -7,7 +7,6 @@ namespace FSM.Action{
     {
         private readonly int moveSpeedHash = Animator.StringToHash("MoveSpeed");
         private readonly int moveBlendTreeHash = Animator.StringToHash("MoveBlendTree");
-        private readonly int lockOnMoveBlendTreeHash = Animator.StringToHash("LockOnMoveBlendTree");
         private const float animationDampTime = 0.1f;
         private const float crossFadeDuration = 0.2f;
 

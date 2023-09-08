@@ -11,7 +11,7 @@ namespace AI.Maria{
         [SerializeField] private CharacterController characterController;
         [SerializeField] private Animator animator;
         [HideInInspector] public Vector3 spawnPosition {get; private set;}
-
+        [SerializeField] public GameObject bloodSplatter;
         private int health;
         public int Health { 
             get {
