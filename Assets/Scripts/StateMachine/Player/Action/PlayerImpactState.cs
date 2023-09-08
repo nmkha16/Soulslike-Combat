@@ -18,6 +18,7 @@ namespace FSM.Action{
             playerStateMachine.velocity = Vector3.zero;
             playerStateMachine.animator.CrossFadeInFixedTime(impactHash, crossFadeDuration);
             playerStateMachine.ToggleInvincibility(true);
+            playerStateMachine.isTakenDamge = true;
         }
 
         public override void Tick()
@@ -33,10 +34,15 @@ namespace FSM.Action{
             Move();
 
             if (elapsed > waitTime){
+                Debug.Log("impact timeout done");
                 if (playerStateMachine.inputReader.isLockedOnTarget){
+                    playerStateMachine.isTakenDamge = false;
+                    playerStateMachine.ToggleInvincibility(false);
                     SwitchToLockOnState();
                     return;
                 }
+                playerStateMachine.isTakenDamge = false;
+                playerStateMachine.ToggleInvincibility(false);
                 SwitchToMoveState();
             }
         }

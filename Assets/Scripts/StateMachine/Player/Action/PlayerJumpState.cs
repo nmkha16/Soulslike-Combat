@@ -21,7 +21,7 @@ namespace FSM.Action{
             ApplyGravity();
 
             if (playerStateMachine.velocity.y <= 0){
-                playerStateMachine.SwitchState(new PlayerFallState(playerStateMachine));
+                SwitchToFallState();
             }
             
             FaceMoveDirection();

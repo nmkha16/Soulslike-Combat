@@ -5,9 +5,10 @@ using UnityEngine;
 namespace FSM.Action{
     public class PlayerBlockedImpactState : PlayerBaseState
     {
+        private readonly int blockIdleHash = Animator.StringToHash("Block Idle");
         protected readonly int blockedImpactHash = Animator.StringToHash("Blocked Impact");
         private const float crossFadeDuration = .1f;
-        private const float waitTime = .5f;
+        private const float waitTime = 1.1f;
         private float elapsed = 0f;
         public PlayerBlockedImpactState(PlayerStateMachine playerStateMachine) : base(playerStateMachine)
         {
@@ -36,6 +37,7 @@ namespace FSM.Action{
 
         public override void Exit()
         {
+            playerStateMachine.animator.CrossFadeInFixedTime(blockIdleHash, crossFadeDuration);
         }
     }
 }

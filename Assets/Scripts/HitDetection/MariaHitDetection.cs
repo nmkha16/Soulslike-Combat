@@ -31,6 +31,10 @@ public class MariaHitDetection : MonoBehaviour
         this.enabled = false;
     }
 
+    private void OnEnable(){
+        gizmoTransform = hitComponentTransform;
+    }
+
     private void OnDestroy() {
         this.maria.OnActivateHitbox -= ActivateHitbox;
         this.maria. OnEndHitbox -= EndHitbox;
@@ -42,7 +46,6 @@ public class MariaHitDetection : MonoBehaviour
         if (hits != 0){
             for (int i =0 ; i < hits; i++){
                 if (hitColliders[i].TryGetComponent<IDamagable>(out var damagable)){
-                    Debug.Log("hit " + hitColliders[i].name);
                     damagable.TakeDamage(10);
                 }
             }
@@ -59,6 +62,7 @@ public class MariaHitDetection : MonoBehaviour
     }
 
     void OnDrawGizmos(){
+        if (gizmoTransform == null) return;
         Gizmos.color = Color.green;
         Gizmos.DrawCube(gizmoTransform.position,size);
     }

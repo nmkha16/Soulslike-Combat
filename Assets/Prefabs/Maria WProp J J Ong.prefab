@@ -151,7 +151,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1064522433615325058}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.563, y: 0.35, z: -0.058}
+  m_LocalPosition: {x: -0.662, y: 0.35, z: 0.003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1594,7 +1594,7 @@ MonoBehaviour:
     m_Bits: 4
   leftLegTransform: {fileID: 3865156515848982413}
   rightLegTransform: {fileID: 1918447756130756490}
-  rightHandTransform: {fileID: 5704025601268799128}
+  rightHandTransform: {fileID: 4308153091242570203}
 --- !u!114 &4990625446118918178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2773,12 +2773,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maria: {fileID: 5279259913675176144}
-  sphereRadius: 0.27
   targetLayerMask:
     serializedVersion: 2
     m_Bits: 8
   gizmoTransform: {fileID: 4308153091242570203}
-  size: {x: 0.51, y: 0.05, z: 0.87}
+  size: {x: 0.7, y: 0.11, z: 1.11}
 --- !u!1 &6940051456684850203
 GameObject:
   m_ObjectHideFlags: 0

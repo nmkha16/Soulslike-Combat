@@ -347,7 +347,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     percentTimeOfStartHitbox: 0
-    percentTimeOfEndHitbox: 0.3
+    percentTimeOfEndHitbox: 0.6
   defenseAnimationClips:
   - anim: {fileID: -203655887218126122, guid: 0f0a2f2518a9116428748ec5e24e4052, type: 3}
   - anim: {fileID: -203655887218126122, guid: aab72d41afc1cf44cb018cf4c205d74e, type: 3}
@@ -359,11 +359,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   targetLockOnRadius: 11
-  maxLockOnRangeBeforeCancel: 140
+  maxLockOnRangeBeforeCancel: 150
   lockOnTarget: {fileID: 0}
-  ignoreRaycastLayerMask:
-    serializedVersion: 2
-    m_Bits: 4
   hitDetection: {fileID: 1410107078629049257}
 --- !u!114 &582552314586643647
 MonoBehaviour:
@@ -381,6 +378,7 @@ MonoBehaviour:
   moveComposite: {x: 0, y: 0}
   isRunning: 0
   isLockedOnTarget: 0
+  isHoldingBlock: 0
 --- !u!114 &1410107078629049257
 MonoBehaviour:
   m_ObjectHideFlags: 0

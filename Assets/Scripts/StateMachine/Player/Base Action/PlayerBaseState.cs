@@ -74,6 +74,7 @@ namespace FSM.Action{
         }
 
         protected bool IsLockOnTargetOutOfRange(){
+            if (playerStateMachine.lockOnTarget == null) return false;
             return (playerStateMachine.lockOnTarget.position - playerStateMachine.transform.position).sqrMagnitude > playerStateMachine.maxLockOnRangeBeforeCancel;
         }
 
@@ -104,7 +105,6 @@ namespace FSM.Action{
         protected void SwitchToBlockState(){
             playerStateMachine.SwitchState(new PlayerBlockState(playerStateMachine));
         }
-
     }
 
 }

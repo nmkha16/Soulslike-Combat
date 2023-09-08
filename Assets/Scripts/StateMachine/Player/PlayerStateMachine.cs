@@ -51,10 +51,10 @@ public class PlayerStateMachine : StateMachine, IDamagable
     public float targetLockOnRadius = 8f; // use for check overlapsphere
     public float maxLockOnRangeBeforeCancel = 140f; // distance via sqrmagnitude
     private Collider[] hitColliders = new Collider[3];
-    [HideInInspector] public Transform lockOnTarget;
+    public Transform lockOnTarget;
 
     private LayerMask defaultLayerMask;
-    [SerializeField] private LayerMask ignoreRaycastLayerMask; 
+    private LayerMask ignoreRaycastLayerMask; 
 
     [Header("Hit Detection")]
     [SerializeField] private HitDetection hitDetection;
@@ -68,7 +68,8 @@ public class PlayerStateMachine : StateMachine, IDamagable
             hitDetection = GetComponentInChildren<HitDetection>();
         }
 
-        defaultLayerMask = gameObject.layer;    
+        defaultLayerMask = gameObject.layer;   
+        ignoreRaycastLayerMask = LayerMask.NameToLayer("Ignore Raycast"); 
     }
 
     private void Start(){
@@ -185,6 +186,7 @@ public class PlayerStateMachine : StateMachine, IDamagable
             OnBlockedHit?.Invoke();
         }
         else{
+            Debug.Log("ouch");
             isTakenDamge = true;
             SwitchToImpactState();
             Health-= amount;
