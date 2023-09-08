@@ -3,17 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace FSM.Action{
-    // remove comment below if you want player to be able to move while blocking
     public class PlayerBlockState : PlayerBaseState
     {
-        // private readonly int moveXHash = Animator.StringToHash("MoveX");
-        // private readonly int moveYHash = Animator.StringToHash("MoveY");
-        // private readonly int lockOnMoveBlendTreeHash = Animator.StringToHash("LockOnMoveBlendTree");
         private readonly int blockIdleHash = Animator.StringToHash("Block Idle");
         private readonly int blockToIdleHash = Animator.StringToHash("Block To Idle");
-        private const float crossFadeDuration = .25f;
-        //private const float animationDampTime = 0.2f;
-        private const float deltaLockOnSpeedReductionMultiplier = 0.50f;
+        private const float crossFadeDuration = .2f;
         public PlayerBlockState(PlayerStateMachine playerStateMachine) : base(playerStateMachine)
         {
         }
@@ -21,49 +15,53 @@ namespace FSM.Action{
         public override void Enter()
         {
             playerStateMachine.isBlocking = true;
-            // playerStateMachine.animator.CrossFadeInFixedTime(lockOnMoveBlendTreeHash,crossFadeDuration);
-            playerStateMachine.animator.CrossFadeInFixedTime(blockIdleHash,crossFadeDuration,1);
+            playerStateMachine.animator.CrossFadeInFixedTime(blockIdleHash,crossFadeDuration);
             playerStateMachine.inputReader.OnBlockPerformed += ExitBlockState;
+            playerStateMachine.OnBlockedHit += SwitchToBlockedImpactState;
         }
 
         public override void Tick()
         {
             if (!playerStateMachine.inputReader.isHoldingBlock){
+                playerStateMachine.isBlocking = false;
                 SwitchToLockOnState();
             }
 
             if (!playerStateMachine.characterController.isGrounded){
+                playerStateMachine.isBlocking = false;
                 SwitchToFallState();
             }
 
             if (IsLockOnTargetOutOfRange()){
+                playerStateMachine.isBlocking = false;
                 playerStateMachine.CancelLockOnState();
                 SwitchToMoveState();
             }
 
+            ApplyGravity();
             FaceTargetDirection(playerStateMachine.lockOnTarget);
-            // ApplyGravity();
-            // CalculateMoveDirection(deltaLockOnSpeedReductionMultiplier);
-            // FaceTargetDirection(playerStateMachine.lockOnTarget);
-            // Move();
-
-            // playerStateMachine.animator.SetFloat(moveXHash, playerStateMachine.inputReader.moveComposite.x,animationDampTime,Time.deltaTime);
-            // playerStateMachine.animator.SetFloat(moveYHash, playerStateMachine.inputReader.moveComposite.y,animationDampTime,Time.deltaTime);
+            Move();
         }
 
         public override void Exit()
         {
-            playerStateMachine.isBlocking = false;
-            playerStateMachine.animator.CrossFadeInFixedTime(blockToIdleHash,0.1f,1);
+            //playerStateMachine.isBlocking = false;
+            playerStateMachine.animator.CrossFadeInFixedTime(blockToIdleHash,crossFadeDuration);
+            playerStateMachine.OnBlockedHit -= SwitchToBlockedImpactState;
             playerStateMachine.inputReader.OnBlockPerformed -= ExitBlockState;
         }
 
         private void ExitBlockState(){
+            playerStateMachine.isBlocking = false;
             if (playerStateMachine.inputReader.isLockedOnTarget){
                 SwitchToLockOnState();
                 return;
             }
             SwitchToMoveState();
+        }
+
+        private void SwitchToBlockedImpactState(){
+            playerStateMachine.SwitchState(new PlayerBlockedImpactState(playerStateMachine));
         }
     }
 }

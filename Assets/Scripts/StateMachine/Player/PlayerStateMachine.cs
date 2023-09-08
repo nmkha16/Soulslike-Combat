@@ -9,6 +9,7 @@ using FSM.Action;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerStateMachine : StateMachine, IDamagable
 {
+    public Action OnBlockedHit;
     public static Action<PlayerStateMachine> OnPlayerInitialized;
     public Action<Transform,bool> OnLockOnTargetActionPerformed;
     public int health = 200;
@@ -180,11 +181,15 @@ public class PlayerStateMachine : StateMachine, IDamagable
     public void TakeDamage(int amount)
     {
         if (isTakenDamge) return;
-        isTakenDamge = true;
-        SwitchToImpactState();
-        Health-= amount;
+        if (isBlocking || isParrying){
+            OnBlockedHit?.Invoke();
+        }
+        else{
+            isTakenDamge = true;
+            SwitchToImpactState();
+            Health-= amount;
+        }
     }
-
     protected void SwitchToImpactState(){
         SwitchState(new PlayerImpactState(this));
     }

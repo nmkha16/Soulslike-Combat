@@ -15,6 +15,7 @@ namespace FSM.Action{
 
         public override void Enter()
         {
+            playerStateMachine.velocity = Vector3.zero;
             playerStateMachine.animator.CrossFadeInFixedTime(impactHash, crossFadeDuration);
             playerStateMachine.ToggleInvincibility(true);
         }
@@ -33,10 +34,10 @@ namespace FSM.Action{
 
             if (elapsed > waitTime){
                 if (playerStateMachine.inputReader.isLockedOnTarget){
-                    playerStateMachine.SwitchState(new PlayerLockOnState(playerStateMachine));
+                    SwitchToLockOnState();
                     return;
                 }
-                playerStateMachine.SwitchState(new PlayerMoveState(playerStateMachine));
+                SwitchToMoveState();
             }
         }
 
@@ -45,6 +46,5 @@ namespace FSM.Action{
             playerStateMachine.isTakenDamge = false;
             playerStateMachine.ToggleInvincibility(false);
         }
-
     }
 }
