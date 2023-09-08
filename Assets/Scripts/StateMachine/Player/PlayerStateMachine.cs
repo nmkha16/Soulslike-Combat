@@ -7,11 +7,14 @@ using FSM.Action;
 [RequireComponent(typeof(InputReader))]
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(CharacterController))]
-public class PlayerStateMachine : StateMachine, IDamagable
+public class PlayerStateMachine : StateMachine, IDamagable, ICanParryStab
 {
     public Action OnBlockedHit;
     public static Action<PlayerStateMachine> OnPlayerInitialized;
     public Action<Transform,bool> OnLockOnTargetActionPerformed;
+    public Action OnParryStabPerformed;
+    public Action OnParryExactStab; // invoke at frame where the user is about to stab target
+    public Action OnParryStabEnded;
     public int health = 200;
     public Vector3 velocity;
     public float moveSpeed {get; private set;} = 5f;
@@ -203,5 +206,11 @@ public class PlayerStateMachine : StateMachine, IDamagable
 
     private void SwitchToParryStabState(){
         SwitchState(new PlayerParryStabState(this));
+    }
+
+    public void ParryStab()
+    {
+        OnParryStabPerformed?.Invoke();
+        SwitchToParryStabState();
     }
 }

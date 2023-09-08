@@ -12,17 +12,23 @@ public class GameManager : MonoBehaviour
     [Header("Cinemachine")]
     [SerializeField] private CinemachineVirtualCamera followPlayerCamera;
     [SerializeField] private CinemachineVirtualCamera lockOnCamera;
+    [SerializeField] private CinemachineVirtualCamera riposteCamera;
+    [SerializeField] private CinemachineShake riposteCameraShake;
+    [SerializeField] private float riposteCameraShakeAmplitudeGain = 2f;
+    [SerializeField] private float riposteCameraShakeTime = 0.3f;
     [Header("UI")]
     [SerializeField] private PlayerLockOnUI lockingUI;
     [SerializeField] private Animator cinemachineAnimator;
-    protected readonly int followPlayerAnim = Animator.StringToHash("FollowPlayerCamera");
-    protected readonly int lockOnTargetAnim = Animator.StringToHash("LockOnTargetCamera");
+    protected readonly int followPlayerAnimHash = Animator.StringToHash("FollowPlayerCamera");
+    protected readonly int lockOnTargetAnimHash = Animator.StringToHash("LockOnTargetCamera");
+    protected readonly int riposteCameraAnimHash = Animator.StringToHash("RiposteCamera");
     private PlayerStateMachine playerStateMachine;
 
     private Coroutine lockOnRoutine;
 
     private void Awake(){
         PlayerStateMachine.OnPlayerInitialized += LoadPlayerStateMachine;
+        riposteCameraShake = riposteCamera.GetComponent<CinemachineShake>();
     }
 
     private void Start(){
@@ -31,18 +37,23 @@ public class GameManager : MonoBehaviour
     
     private void OnDestroy() {
         PlayerStateMachine.OnPlayerInitialized -= LoadPlayerStateMachine;
-        playerStateMachine.OnLockOnTargetActionPerformed -= LockOnTargetUI;
-
+        this.playerStateMachine.OnLockOnTargetActionPerformed -= LockOnTargetUI;
+        this.playerStateMachine.OnParryStabPerformed -= StartRiposteCamera;
+        this.playerStateMachine.OnParryStabEnded -= ReturnToLockOnCamera;
+        this.playerStateMachine.OnParryExactStab -= ShakeCamera;
     }
 
     private void LoadPlayerStateMachine(PlayerStateMachine playerStateMachine){
         this.playerStateMachine = playerStateMachine;
         this.playerStateMachine.OnLockOnTargetActionPerformed += LockOnTargetUI;
+        this.playerStateMachine.OnParryStabPerformed += StartRiposteCamera;
+        this.playerStateMachine.OnParryStabEnded += ReturnToLockOnCamera;
+        this.playerStateMachine.OnParryExactStab += ShakeCamera;
     }
 
     private void LockOnTargetUI(Transform target, bool isFound){
         if (isFound){
-            cinemachineAnimator.Play(lockOnTargetAnim);
+            cinemachineAnimator.Play(lockOnTargetAnimHash);
             lockOnCamera.m_LookAt = target;
             var targetCharacterController = target.GetComponent<CharacterController>();
 
@@ -55,7 +66,7 @@ public class GameManager : MonoBehaviour
 
             StopLockOnRoutine();
 
-            cinemachineAnimator.Play(followPlayerAnim);
+            cinemachineAnimator.Play(followPlayerAnimHash);
         }
     }
 
@@ -105,5 +116,21 @@ public class GameManager : MonoBehaviour
 
         // for lock on camera
         lockOnCamera.m_Follow = player.transform;
+
+        // for riposte camera
+        riposteCamera.m_Follow = player.transform;
+    }
+
+    private void StartRiposteCamera(){
+        cinemachineAnimator.Play(riposteCameraAnimHash);
+        riposteCamera.m_LookAt = playerStateMachine.lockOnTarget;
+    }
+
+    private void ReturnToLockOnCamera(){
+        cinemachineAnimator.Play(lockOnTargetAnimHash);
+    }
+
+    private void ShakeCamera(){
+        riposteCameraShake.ShakeCamera(riposteCameraShakeAmplitudeGain,riposteCameraShakeTime);
     }
 }

@@ -7,6 +7,7 @@ namespace FSM.Action{
     {
         private readonly int parryStabHash = Animator.StringToHash("Parry Stab");
         private const float crossFadeDuration = 0f;
+        private float aboutToStabTime = 0.8f;
         private AttackSequence attackSequence = AttackSequence.Parry_Stab;
         private float animLength;
         private float elapsed = 0f;
@@ -24,12 +25,18 @@ namespace FSM.Action{
         {
             elapsed += Time.deltaTime;
 
+            if (elapsed > aboutToStabTime){
+                playerStateMachine.OnParryExactStab?.Invoke();
+                aboutToStabTime = 99f;
+            }
+
             if (!playerStateMachine.characterController.isGrounded){
                 playerStateMachine.SwitchState(new PlayerFallState(playerStateMachine));
             }
             
             if (elapsed > animLength){
                 if (playerStateMachine.inputReader.isLockedOnTarget){
+                    playerStateMachine.OnParryStabEnded?.Invoke();
                     SwitchToLockOnState();
                     return;
                 }
@@ -40,7 +47,6 @@ namespace FSM.Action{
 
         public override void Exit()
         {
-            
         }
     }
 }

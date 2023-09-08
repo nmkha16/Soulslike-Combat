@@ -129,12 +129,14 @@ namespace AI.Maria{
             gameObject.layer = ignoreRaycastLayer;
             isOnHit = true; // isOnHit true will trigger conditional to on hit
             health -= amount;
-            // TODO: update health bar
+            // TODO: update health bar UI maybe
 
             // tell the attacker to enter parry stab animation
             if (isParried){
-                isParryStabbed = true; // will enter parry stabbed anim
-                from.BroadcastMessage("SwitchToParryStabState"); // fix this red flag code
+                if (from.TryGetComponent<ICanParryStab>(out var canParryStab)){
+                    isParryStabbed = true; // victim will enter parry stabbed anim
+                    canParryStab.ParryStab(); // attacker will enter parry stab anim
+                }
             }
         }
 
