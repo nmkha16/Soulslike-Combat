@@ -55,12 +55,14 @@ public class PlayerStateMachine : StateMachine, IDamagable, ICanParryStab
     public float maxLockOnRangeBeforeCancel = 140f; // distance via sqrmagnitude
     private Collider[] hitColliders = new Collider[3];
     public Transform lockOnTarget;
-
     private LayerMask defaultLayerMask;
     private LayerMask ignoreRaycastLayerMask; 
 
     [Header("Hit Detection")]
     [SerializeField] private HitDetection hitDetection;
+
+    [Header("Sword sfx")]
+    [SerializeField] private GameObject swordSfx;
     
     public void AssignCamera(GameObject followPlayerCamera){
         this.cinemachineVirtualCamera = followPlayerCamera;
@@ -191,16 +193,18 @@ public class PlayerStateMachine : StateMachine, IDamagable, ICanParryStab
         }
         else if (isParrying){
             if (from.TryGetComponent<IParriable>(out var parriable)){
-                SoundManager.instance.PlayAudio(SoundId.Parry);
+                SoundManager.instance.PlayAudio(SoundId.sfx_parry);
                 parriable.GetParried();
             }
         }
         else{
+            Debug.Log("ouch");
             isTakenDamge = true;
             SwitchToImpactState();
             Health-= amount;
         }
     }
+
     protected void SwitchToImpactState(){
         SwitchState(new PlayerImpactState(this));
     }
@@ -213,5 +217,9 @@ public class PlayerStateMachine : StateMachine, IDamagable, ICanParryStab
     {
         OnParryStabPerformed?.Invoke();
         SwitchToParryStabState();
+    }
+
+    public void ToggleSwordSfx(bool toggle){
+        swordSfx.SetActive(toggle);
     }
 }

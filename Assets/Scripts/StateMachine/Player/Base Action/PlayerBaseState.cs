@@ -1,14 +1,17 @@
+using System;
 using UnityEngine;
 
 namespace FSM.Action{
     public abstract class PlayerBaseState : State
     {
+        public Action<SoundId> OnPlaySoundOnce;
         protected readonly int animMultiplier = Animator.StringToHash("AnimMultiplier");
         protected readonly PlayerStateMachine playerStateMachine;
         private const float deltaWalkSpeedReductionMultiplier = 0.25f;
 
         protected PlayerBaseState(PlayerStateMachine playerStateMachine){
             this.playerStateMachine = playerStateMachine;
+            OnPlaySoundOnce += PlaySound;
         }
 
         protected virtual void CalculateMoveDirection(){
@@ -110,6 +113,15 @@ namespace FSM.Action{
 
         protected void SwitchToParryState(){
             playerStateMachine.SwitchState(new PlayerParryState(playerStateMachine));
+        }
+
+        protected void PlaySound(SoundId id){
+            SoundManager.instance.PlayAudio(id);
+            CleanPlaySoundEvent();
+        }
+
+        protected void CleanPlaySoundEvent(){
+            OnPlaySoundOnce -= PlaySound;
         }
     }
 

@@ -63,7 +63,7 @@ namespace FSM.Action{
 
         protected override void SwitchToHeavyAttackState(){
             // player can perform heavy attack if only they are not running
-            if (playerStateMachine.inputReader.moveComposite.sqrMagnitude == 0){
+            if ( !playerStateMachine.isRunning || playerStateMachine.inputReader.moveComposite.sqrMagnitude == 0){
                 playerStateMachine.SwitchState(new PlayerHeavyAttackState(playerStateMachine));
             }
         }

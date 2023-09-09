@@ -9,7 +9,7 @@ namespace FSM.Action{
         private const float crossFadeDuration = .25f;
         private AttackSequence attackSequence = AttackSequence.Running_Attack;
         private float easingCurve = 5f;
-        private float recommendSpeed = 1.35f;
+        private float recommendSpeed = 1.2f;
         private float animLength;
         private AnimationCurve curve;
         private float elapsed = 0f;
@@ -31,6 +31,9 @@ namespace FSM.Action{
 
             startHitbox = percentTimeOfStartHitbox / recommendSpeed;
             endHitbox = percentTimeOfEndHitbox / recommendSpeed;
+
+            // enable sfx
+            playerStateMachine.ToggleSwordSfx(true);
         }
 
         public override void Tick()
@@ -39,6 +42,7 @@ namespace FSM.Action{
 
             if (elapsed >= startHitbox && elapsed <= endHitbox){
                 playerStateMachine.ToggleWeaponHitbox(true);
+                OnPlaySoundOnce?.Invoke(SoundId.sfx_sword_fast_whoosh);
             }
             else {
                 playerStateMachine.ToggleWeaponHitbox(false);
@@ -63,6 +67,10 @@ namespace FSM.Action{
 
         public override void Exit()
         {
+            // disable sword sfx
+            CleanPlaySoundEvent();
+            playerStateMachine.ToggleSwordSfx(false);
+
             playerStateMachine.ToggleWeaponHitbox(false);
             playerStateMachine.animator.SetFloat(animMultiplier,1f);
         }

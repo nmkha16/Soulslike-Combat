@@ -19,6 +19,9 @@ public class MariaHitDetection : MonoBehaviour
     //private RaycastHit[] hit = new RaycastHit[5];
     private Collider[] hitColliders = new Collider[5];
 
+    private HashSet<Transform> hashSet = new HashSet<Transform>();
+    private float elapsed = 0f;
+
     private void Awake(){
         if (maria == null){
             maria = GetComponent<MariaBoss>();
@@ -33,6 +36,7 @@ public class MariaHitDetection : MonoBehaviour
 
     private void OnEnable(){
         gizmoTransform = hitComponentTransform;
+        elapsed = 0f;
     }
 
     private void OnDestroy() {
@@ -41,12 +45,21 @@ public class MariaHitDetection : MonoBehaviour
     }
 
     private void Update() {
-        int hits = Physics.OverlapBoxNonAlloc(hitComponentTransform.position,size, hitColliders, Quaternion.identity,targetLayerMask);
+        elapsed += Time.deltaTime;
+        if (elapsed > 1f){
+            hashSet.Clear();
+            elapsed = 0;
+        }
+
+        int hits = Physics.OverlapBoxNonAlloc(hitComponentTransform.position,size, hitColliders, Quaternion.identity, targetLayerMask);
 
         if (hits != 0){
             for (int i =0 ; i < hits; i++){
-                if (hitColliders[i].TryGetComponent<IDamagable>(out var damagable)){
-                    damagable.TakeDamage(this.transform, 10);
+                if (!hashSet.Contains(hitColliders[i].transform)){
+                    hashSet.Add(hitColliders[i].transform);
+                    if (hitColliders[i].TryGetComponent<IDamagable>(out var damagable)){
+                        damagable.TakeDamage(this.transform, 10);
+                    }
                 }
             }
         }
@@ -59,6 +72,7 @@ public class MariaHitDetection : MonoBehaviour
 
     private void EndHitbox(){
         this.enabled = false;
+        hashSet.Clear();
     }
 
     void OnDrawGizmos(){

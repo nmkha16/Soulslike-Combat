@@ -17,6 +17,8 @@ namespace FSM.Action{
             playerStateMachine.animator.CrossFadeInFixedTime(blockIdleHash,crossFadeDuration);
             playerStateMachine.inputReader.OnBlockPerformed += ExitBlockState;
             playerStateMachine.OnBlockedHit += SwitchToBlockedImpactState;
+            playerStateMachine.velocity.x = 0;
+            playerStateMachine.velocity.z = 0;
         }
 
         public override void Tick()

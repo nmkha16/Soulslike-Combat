@@ -30,7 +30,8 @@ public enum RollDirection{
 }
 
 public enum SoundId{
-    Parry,
-    Parry_Stab,
-    
+    sfx_parry,
+    sfx_parry_stab,
+    sfx_sword_fast_whoosh,
+    sfx_sword_whoosh,
 }

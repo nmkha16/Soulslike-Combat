@@ -6,8 +6,8 @@ namespace FSM.Action{
     public class PlayerImpactState : PlayerBaseState
     {
         protected readonly int impactHash = Animator.StringToHash("Unblocked Impact");
-        private const float crossFadeDuration = 0f;
-        private const float waitTime = 1.1f;
+        private const float crossFadeDuration = 0.02f;
+        private const float waitTime = 1.2f;
         private float elapsed = 0f;
         public PlayerImpactState(PlayerStateMachine playerStateMachine) : base(playerStateMachine)
         {
@@ -15,7 +15,8 @@ namespace FSM.Action{
 
         public override void Enter()
         {
-            playerStateMachine.velocity = Vector3.zero;
+            playerStateMachine.velocity.x = 0f;
+            playerStateMachine.velocity.z = 0f;
             playerStateMachine.animator.CrossFadeInFixedTime(impactHash, crossFadeDuration);
             playerStateMachine.ToggleInvincibility(true);
             playerStateMachine.isTakenDamge = true;
@@ -26,12 +27,13 @@ namespace FSM.Action{
             elapsed += Time.deltaTime;
 
 
-            if (!playerStateMachine.characterController.isGrounded){
-                SwitchToFallState();
-            }
-
             ApplyGravity();
             Move();
+
+            if (!playerStateMachine.characterController.isGrounded){
+                Debug.Log("a");
+                SwitchToFallState();
+            }
 
             if (elapsed > waitTime){
                 if (playerStateMachine.inputReader.isLockedOnTarget){

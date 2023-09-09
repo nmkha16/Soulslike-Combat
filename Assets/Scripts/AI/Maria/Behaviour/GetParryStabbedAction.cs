@@ -36,6 +36,7 @@ namespace AI.Maria.Behaviour{
                 maria.isParried = false;
                 maria.isParryStabbed = false;
                 maria.isOnHit = false;
+                maria.ToggleInvincibility(false);
                 return Status.Success;
             }
 
@@ -50,6 +51,7 @@ namespace AI.Maria.Behaviour{
             maria.isParried = false;
             maria.isParryStabbed = false;
             maria.isOnHit = false;
+            maria.ToggleInvincibility(false);
             animator.SetBool(isParryStabbedHash,false);
         }
     }
