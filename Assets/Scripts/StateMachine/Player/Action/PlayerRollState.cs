@@ -65,6 +65,7 @@ namespace FSM.Action{
 
         public override void Exit()
         {
+            CleanPlaySoundEvent();
             playerStateMachine.ToggleInvincibility(false);
         }
 

@@ -53,6 +53,7 @@ namespace FSM.Action{
 
         public override void Exit()
         {
+            CleanPlaySoundEvent();
             playerStateMachine.inputReader.OnAttackPerformed -= SwitchToAttack1State;
             playerStateMachine.inputReader.OnHeavyAttackPerformed -= SwitchToHeavyAttackState;
             playerStateMachine.inputReader.OnLockedOnPerformed -= ValidateLockOnState;

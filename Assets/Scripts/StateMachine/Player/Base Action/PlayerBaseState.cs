@@ -115,7 +115,11 @@ namespace FSM.Action{
             playerStateMachine.SwitchState(new PlayerParryState(playerStateMachine));
         }
 
-        protected void PlaySound(SoundId id){
+        /// <summary>
+        /// can override to use play sound with randomized pitch
+        /// </summary>
+        /// <param name="id"></param>
+        protected virtual void PlaySound(SoundId id){
             SoundManager.instance.PlayAudio(id);
             CleanPlaySoundEvent();
         }

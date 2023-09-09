@@ -184,7 +184,7 @@ public class PlayerStateMachine : StateMachine, IDamagable, ICanParryStab
         gameObject.layer = toggle ? ignoreRaycastLayerMask : defaultLayerMask;
     }
 
-    public void TakeDamage(Transform from, int amount)
+    public void TakeDamage(Transform from,HitWeapon hitWeapon, int amount)
     {
         if (isTakenDamge) return;
 
@@ -198,7 +198,7 @@ public class PlayerStateMachine : StateMachine, IDamagable, ICanParryStab
             }
         }
         else{
-            Debug.Log("ouch");
+            HitEffectHelper.PlayHitEffect(hitWeapon);
             isTakenDamge = true;
             SwitchToImpactState();
             Health-= amount;

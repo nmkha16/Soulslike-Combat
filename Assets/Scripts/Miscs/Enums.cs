@@ -34,4 +34,12 @@ public enum SoundId{
     sfx_parry_stab,
     sfx_sword_fast_whoosh,
     sfx_sword_whoosh,
+    sfx_shield_hit,
+    sfx_sword_hit,
+    sfx_non_weapon_hit
+}
+
+public enum HitWeapon{
+    Sword,
+    Kick
 }

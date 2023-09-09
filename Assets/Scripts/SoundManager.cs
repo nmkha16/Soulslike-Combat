@@ -15,18 +15,36 @@ public class SoundManager : MonoBehaviour
             soundDict[sound.id] = sound.audio;
         }
 
-        if (instance != null){
+        if (instance != null && instance != this){
             Destroy(this);
         }
         else{
             instance = this;
-            DontDestroyOnLoad(gameObject);
         }
+    }  
+
+    private void Start(){
+        soundList.Clear();
+    }
+
+    private void AdjustPitch(float pitch){
+        audioSource.pitch = pitch;
     }
 
     public void PlayAudio(SoundId id){
         if (soundDict.ContainsKey(id)){
             var audio = soundDict[id];
+            AdjustPitch(1f);
+            audioSource.volume = 1f;
+            audioSource.PlayOneShot(audio);
+        }
+    }
+
+    public void PlayAudioWithRandomPitch(SoundId id){
+        if (soundDict.ContainsKey(id)){
+            var audio = soundDict[id];
+            AdjustPitch(Random.Range(0.75f,1.25f));
+            audioSource.volume = 0.8f;
             audioSource.PlayOneShot(audio);
         }
     }

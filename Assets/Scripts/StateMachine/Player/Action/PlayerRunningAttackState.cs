@@ -74,6 +74,10 @@ namespace FSM.Action{
             playerStateMachine.ToggleWeaponHitbox(false);
             playerStateMachine.animator.SetFloat(animMultiplier,1f);
         }
+        
+        protected override void PlaySound(SoundId id){
+            SoundManager.instance.PlayAudioWithRandomPitch(id);
+            CleanPlaySoundEvent();
+        }
     }
-
 }

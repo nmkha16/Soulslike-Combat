@@ -19,6 +19,7 @@ namespace FSM.Action{
         {
             playerStateMachine.animator.CrossFadeInFixedTime(parryStabHash,crossFadeDuration);
             animLength = playerStateMachine.attackAnimationClips[(int)attackSequence].anim.length;
+            playerStateMachine.ToggleSwordSfx(true);
         }
 
         public override void Tick()
@@ -48,6 +49,8 @@ namespace FSM.Action{
 
         public override void Exit()
         {
+            CleanPlaySoundEvent();
+            playerStateMachine.ToggleSwordSfx(false);
         }
     }
 }

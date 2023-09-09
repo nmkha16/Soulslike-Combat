@@ -47,6 +47,7 @@ namespace FSM.Action{
 
         public override void Exit()
         {
+            CleanPlaySoundEvent();
             playerStateMachine.inputReader.OnJumpPerformed -= SwitchToJumpState;
             playerStateMachine.inputReader.OnAttackPerformed -= SwitchToAttack1State;
             playerStateMachine.inputReader.OnHeavyAttackPerformed -= SwitchToHeavyAttackState;

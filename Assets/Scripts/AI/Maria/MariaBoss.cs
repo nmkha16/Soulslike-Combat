@@ -6,7 +6,7 @@ using UnityEngine;
 namespace AI.Maria{
     public class MariaBoss : MonoBehaviour, IDamagable, IParriable
     {   
-        public Action<Transform> OnActivateHitbox; // params are Transform of hit component
+        public Action<Transform,HitWeapon> OnActivateHitbox; // params are Transform of hit component
         public Action OnEndHitbox;
         [SerializeField] private CharacterController characterController;
         [SerializeField] private Animator animator;
@@ -124,20 +124,24 @@ namespace AI.Maria{
             velocity.z = strafeDir.z * strafeSpeed;
         }
 
-        public void TakeDamage(Transform from, int amount)
+        public void TakeDamage(Transform from, HitWeapon hitWeapon, int amount)
         {
             gameObject.layer = ignoreRaycastLayer;
             isOnHit = true; // isOnHit true will trigger conditional to on hit
-            health -= amount;
-            // TODO: update health bar UI maybe
-
             // tell the attacker to enter parry stab animation
             if (isParried){
                 if (from.TryGetComponent<ICanParryStab>(out var canParryStab)){
                     isParryStabbed = true; // victim will enter parry stabbed anim
                     canParryStab.ParryStab(); // attacker will enter parry stab anim
                 }
+                health -= amount *5;
             }
+            else{
+                health -= amount;
+                HitEffectHelper.PlayHitEffect(hitWeapon);
+            }    
+            // TODO: update health bar UI maybe
+
         }
 
         public void ExitIgnoreRaycastLayer(){

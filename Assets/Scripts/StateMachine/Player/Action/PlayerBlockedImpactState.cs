@@ -16,8 +16,10 @@ namespace FSM.Action{
 
         public override void Enter()
         {
-            playerStateMachine.velocity = Vector3.zero;
+            playerStateMachine.velocity.x = 0;
+            playerStateMachine.velocity.z = 0;
             playerStateMachine.animator.CrossFadeInFixedTime(blockedImpactHash, crossFadeDuration);
+            OnPlaySoundOnce?.Invoke(SoundId.sfx_shield_hit);
         }
 
         public override void Tick()
@@ -37,7 +39,13 @@ namespace FSM.Action{
 
         public override void Exit()
         {
+            CleanPlaySoundEvent();
             playerStateMachine.animator.CrossFadeInFixedTime(blockIdleHash, crossFadeDuration);
+        }
+
+        protected override void PlaySound(SoundId id){
+            SoundManager.instance.PlayAudioWithRandomPitch(id);
+            CleanPlaySoundEvent();
         }
     }
 }

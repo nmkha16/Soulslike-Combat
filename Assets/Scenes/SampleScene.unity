@@ -1312,7 +1312,7 @@ MonoBehaviour:
   riposteCamera: {fileID: 796030743}
   riposteCameraShake: {fileID: 796030746}
   riposteCameraShakeAmplitudeGain: 2
-  riposteCameraShakeTime: 0.2
+  riposteCameraShakeTime: 0.3
   lockingUI: {fileID: 1616998615}
   cinemachineAnimator: {fileID: 1091504716}
 --- !u!4 &1046724890
@@ -2145,6 +2145,12 @@ MonoBehaviour:
     audio: {fileID: 8300000, guid: ad692c42210468b46a01f29a16d0c6b6, type: 3}
   - id: 3
     audio: {fileID: 8300000, guid: 36d2ce1b2d8e17448aba32df5258339e, type: 3}
+  - id: 4
+    audio: {fileID: 8300000, guid: 9aa080d01edc9814cb27af7e92970564, type: 3}
+  - id: 5
+    audio: {fileID: 8300000, guid: 0e25af59f2d1b8d4191077de572dd2e8, type: 3}
+  - id: 6
+    audio: {fileID: 8300000, guid: eb8789d1275dead4ab2b9271e1449090, type: 3}
 --- !u!4 &1893964262
 Transform:
   m_ObjectHideFlags: 0

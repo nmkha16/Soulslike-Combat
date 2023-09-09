@@ -7,7 +7,7 @@ namespace FSM.Action{
     {
         protected readonly int impactHash = Animator.StringToHash("Unblocked Impact");
         private const float crossFadeDuration = 0.02f;
-        private const float waitTime = 1.2f;
+        private const float waitTime = 1f;
         private float elapsed = 0f;
         public PlayerImpactState(PlayerStateMachine playerStateMachine) : base(playerStateMachine)
         {
@@ -50,6 +50,7 @@ namespace FSM.Action{
 
         public override void Exit()
         {
+            CleanPlaySoundEvent();
             playerStateMachine.isTakenDamge = false;
             playerStateMachine.ToggleInvincibility(false);
         }

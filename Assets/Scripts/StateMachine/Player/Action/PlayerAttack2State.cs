@@ -94,5 +94,10 @@ namespace FSM.Action{
             }
         }
 
+        protected override void PlaySound(SoundId id){
+            SoundManager.instance.PlayAudioWithRandomPitch(id);
+            CleanPlaySoundEvent();
+        }
+
     }
 }

@@ -47,6 +47,7 @@ namespace FSM.Action{
         public override void Exit()
         {
             //playerStateMachine.isBlocking = false;
+            CleanPlaySoundEvent();
             playerStateMachine.OnBlockedHit -= SwitchToBlockedImpactState;
             playerStateMachine.inputReader.OnBlockPerformed -= ExitBlockState;
         }

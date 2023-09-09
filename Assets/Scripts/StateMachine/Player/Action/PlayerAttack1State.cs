@@ -47,12 +47,16 @@ namespace FSM.Action{
 
             if (elapsed >= startHitbox && elapsed <= endHitbox){
                 playerStateMachine.ToggleWeaponHitbox(true);
-                OnPlaySoundOnce?.Invoke(SoundId.sfx_sword_whoosh);
             }
             else{
                 playerStateMachine.ToggleWeaponHitbox(false);
             }
 
+            // note: might need to change to a better way, this is a kind of lazy fix
+            // was trying to fix attack1 transits to riposte without activating the sound effect of attack1
+            if (elapsed >= endHitbox-0.1f){
+                OnPlaySoundOnce?.Invoke(SoundId.sfx_sword_whoosh);
+            }
             if (!playerStateMachine.characterController.isGrounded){
                 SwitchToFallState();
             }
@@ -95,6 +99,11 @@ namespace FSM.Action{
             if (elapsed > animLength/2){
                 shouldEnterNextAttack = true;
             }
+        }
+
+        protected override void PlaySound(SoundId id){
+            SoundManager.instance.PlayAudioWithRandomPitch(id);
+            CleanPlaySoundEvent();
         }
     }
 

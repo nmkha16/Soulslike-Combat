@@ -15,7 +15,8 @@ public class MariaHitDetection : MonoBehaviour
     [SerializeField] private LayerMask targetLayerMask;
     [SerializeField] private Transform gizmoTransform;
     [SerializeField] private Vector3 size;
-    private Transform hitComponentTransform;
+    [SerializeField] private Transform hitComponentTransform;
+    private HitWeapon hitWeapon;
     //private RaycastHit[] hit = new RaycastHit[5];
     private Collider[] hitColliders = new Collider[5];
 
@@ -30,7 +31,7 @@ public class MariaHitDetection : MonoBehaviour
 
     private void Start(){
         this.maria.OnActivateHitbox += ActivateHitbox;
-        this.maria. OnEndHitbox += EndHitbox;
+        this.maria.OnEndHitbox += EndHitbox;
         this.enabled = false;
     }
 
@@ -49,24 +50,24 @@ public class MariaHitDetection : MonoBehaviour
         if (elapsed > 1f){
             hashSet.Clear();
             elapsed = 0;
-        }
+    }
 
         int hits = Physics.OverlapBoxNonAlloc(hitComponentTransform.position,size, hitColliders, Quaternion.identity, targetLayerMask);
-
         if (hits != 0){
             for (int i =0 ; i < hits; i++){
                 if (!hashSet.Contains(hitColliders[i].transform)){
                     hashSet.Add(hitColliders[i].transform);
                     if (hitColliders[i].TryGetComponent<IDamagable>(out var damagable)){
-                        damagable.TakeDamage(this.transform, 10);
+                        damagable.TakeDamage(this.transform, hitWeapon, 10);
                     }
                 }
             }
         }
     }
 
-    private void ActivateHitbox(Transform hitComponent){
+    private void ActivateHitbox(Transform hitComponent, HitWeapon hitWeapon){
         this.hitComponentTransform = hitComponent;
+        this.hitWeapon = hitWeapon;
         this.enabled = true;
     }
 

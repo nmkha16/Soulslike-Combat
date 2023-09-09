@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
 
 public class HitDetection : MonoBehaviour
 {
@@ -9,8 +8,24 @@ public class HitDetection : MonoBehaviour
     [SerializeField] private float raycastDistance = 2f;
     [SerializeField] private LayerMask targetLayerMask;
     private RaycastHit[] hit = new RaycastHit[5];
+    private HitWeapon hitWeapon = HitWeapon.Sword;
+    private HashSet<Transform> hashSet = new HashSet<Transform>();
+    private float elapsed = 0f;
+
     private void Awake(){
         this.enabled = false;
+    }
+
+    private void Update() {
+        elapsed += Time.deltaTime;
+        if (elapsed > 0.75f){
+            hashSet.Clear();
+            elapsed = 0;
+        }
+    }
+
+    private void OnDisable() {
+        hashSet.Clear();
     }
 
     private void FixedUpdate() {
@@ -19,8 +34,11 @@ public class HitDetection : MonoBehaviour
 
         if (hits != 0){
             for (int i =0 ; i < hits; i++){
-                if (hit[i].transform.TryGetComponent<IDamagable>(out var damagable)){
-                    damagable.TakeDamage(this.transform, 10);
+                if (!hashSet.Contains(hit[i].transform)){
+                    hashSet.Add(hit[i].transform);
+                    if (hit[i].transform.TryGetComponent<IDamagable>(out var damagable)){
+                        damagable.TakeDamage(this.transform, hitWeapon, 10);
+                    }
                 }
             }
         }
