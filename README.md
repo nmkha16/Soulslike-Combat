@@ -13,4 +13,4 @@ I apply FSM into Player Control and BT to do the AI boss. The player should be e
 
 Behaviour Tree with Graph Editor taken from [UniBT](https://github.com/yoshidan/UniBT)
 
-Animations and Models taken from [Mixamo](https://mixamo.com)
+Animations and Models taken from [Mixamo](https://mixamo.com), [Souls-like Essential Animations](https://assetstore.unity.com/packages/3d/animations/souls-like-essential-animations-178889)
