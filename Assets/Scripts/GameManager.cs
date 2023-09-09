@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Cinemachine;
 using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {
@@ -33,6 +32,11 @@ public class GameManager : MonoBehaviour
 
     private void Start(){
         SpawnPlayer();
+        // Locks the cursor
+        Cursor.lockState = CursorLockMode.Locked;
+        // Confines the cursor
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = false; 
     }
     
     private void OnDestroy() {
@@ -41,6 +45,8 @@ public class GameManager : MonoBehaviour
         this.playerStateMachine.OnParryStabPerformed -= StartRiposteCamera;
         this.playerStateMachine.OnParryStabEnded -= ReturnToLockOnCamera;
         this.playerStateMachine.OnParryExactStab -= ShakeCamera;
+        Cursor.visible = false; 
+        Cursor.lockState= CursorLockMode.None;
     }
 
     private void LoadPlayerStateMachine(PlayerStateMachine playerStateMachine){

@@ -1312,7 +1312,7 @@ MonoBehaviour:
   riposteCamera: {fileID: 796030743}
   riposteCameraShake: {fileID: 796030746}
   riposteCameraShakeAmplitudeGain: 2.25
-  riposteCameraShakeTime: 3.5
+  riposteCameraShakeTime: 0.35
   lockingUI: {fileID: 1616998615}
   cinemachineAnimator: {fileID: 1091504716}
 --- !u!4 &1046724890
