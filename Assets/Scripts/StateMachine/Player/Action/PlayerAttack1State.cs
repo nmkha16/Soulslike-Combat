@@ -28,14 +28,15 @@ namespace FSM.Action{
             playerStateMachine.inputReader.OnAttackPerformed += EnterNextAttackSequence;
             playerStateMachine.animator.CrossFadeInFixedTime(attack1Hash,crossFadeDuration);
             playerStateMachine.animator.SetFloat(animMultiplier,recommendSpeed);
-            animLength = playerStateMachine.attackAnimationClips[(int)attackSequence].anim.length / recommendSpeed;
             curve = playerStateMachine.attackAnimationClips[(int)attackSequence].curve;
+
+            animLength = playerStateMachine.attackAnimationClips[(int)attackSequence].anim.length / recommendSpeed;
 
             percentTimeOfStartHitbox = playerStateMachine.attackAnimationClips[(int)attackSequence].percentTimeOfStartHitbox;
             percentTimeOfEndHitbox = playerStateMachine.attackAnimationClips[(int)attackSequence].percentTimeOfEndHitbox;
 
-            startHitbox = animLength * percentTimeOfStartHitbox;
-            endHitbox = animLength * percentTimeOfEndHitbox;
+            startHitbox = percentTimeOfStartHitbox / recommendSpeed;
+            endHitbox = percentTimeOfEndHitbox / recommendSpeed;
         }
 
         public override void Tick()
@@ -63,7 +64,7 @@ namespace FSM.Action{
                 return;
             }
 
-            if (elapsed > animLength * 0.9f){
+            if (elapsed > animLength){
                 if (playerStateMachine.inputReader.isLockedOnTarget){
                     SwitchToLockOnState();
                     return;
@@ -75,6 +76,7 @@ namespace FSM.Action{
 
         public override void Exit()
         {
+            playerStateMachine.ToggleWeaponHitbox(false);
             playerStateMachine.animator.SetFloat(animMultiplier,1f);
             playerStateMachine.ToggleWeaponHitbox(false);
             playerStateMachine.inputReader.OnAttackPerformed -= EnterNextAttackSequence;

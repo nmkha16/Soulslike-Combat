@@ -30,8 +30,8 @@ namespace FSM.Action{
             percentTimeOfStartHitbox = playerStateMachine.attackAnimationClips[(int)attackSequence].percentTimeOfStartHitbox;
             percentTimeOfEndHitbox = playerStateMachine.attackAnimationClips[(int)attackSequence].percentTimeOfEndHitbox;
 
-            startHitbox = animLength * percentTimeOfStartHitbox;
-            endHitbox = animLength * percentTimeOfEndHitbox;
+            startHitbox = percentTimeOfStartHitbox / recommendSpeed;
+            endHitbox = percentTimeOfEndHitbox / recommendSpeed;
         }
 
         public override void Tick()
@@ -54,7 +54,7 @@ namespace FSM.Action{
             FaceMoveDirection();
             Move();
 
-            if (elapsed > animLength * 0.9f){
+            if (elapsed > animLength){
                 if (playerStateMachine.inputReader.isLockedOnTarget){
                     SwitchToLockOnState();
                     return;
@@ -66,6 +66,7 @@ namespace FSM.Action{
 
         public override void Exit()
         {
+            playerStateMachine.ToggleWeaponHitbox(false);
             playerStateMachine.animator.SetFloat(animMultiplier,1f);
         }
     }

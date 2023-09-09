@@ -33,8 +33,8 @@ namespace AI.Maria.Behaviour{
         public override void Start(){
             animLength = anim.length / recommendSpeed;
 
-            startHitbox = animLength * percentTimeOfStartHitbox;
-            endHitbox = animLength * percentTimeOfEndHitbox;
+            startHitbox = percentTimeOfStartHitbox / recommendSpeed;
+            endHitbox = percentTimeOfEndHitbox / recommendSpeed;
 
             switch (attackType){
                 case MariaAttackType.Sword:

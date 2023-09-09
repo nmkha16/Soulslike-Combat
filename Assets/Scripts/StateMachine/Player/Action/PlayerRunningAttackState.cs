@@ -13,6 +13,8 @@ namespace FSM.Action{
         private float animLength;
         private AnimationCurve curve;
         private float elapsed = 0f;
+        private float percentTimeOfStartHitbox, percentTimeOfEndHitbox;
+        private float startHitbox,endHitbox;
         public PlayerRunningAttackState(PlayerStateMachine playerStateMachine) : base(playerStateMachine)
         {
         }
@@ -23,16 +25,30 @@ namespace FSM.Action{
             playerStateMachine.animator.SetFloat(animMultiplier,recommendSpeed);
             animLength = playerStateMachine.attackAnimationClips[(int)attackSequence].anim.length / recommendSpeed;
             curve = playerStateMachine.attackAnimationClips[(int)attackSequence].curve;
+
+            percentTimeOfStartHitbox = playerStateMachine.attackAnimationClips[(int)attackSequence].percentTimeOfStartHitbox;
+            percentTimeOfEndHitbox = playerStateMachine.attackAnimationClips[(int)attackSequence].percentTimeOfEndHitbox;
+
+            startHitbox = percentTimeOfStartHitbox / recommendSpeed;
+            endHitbox = percentTimeOfEndHitbox / recommendSpeed;
         }
 
         public override void Tick()
         {
             elapsed += Time.deltaTime;
 
+            if (elapsed >= startHitbox && elapsed <= endHitbox){
+                playerStateMachine.ToggleWeaponHitbox(true);
+            }
+            else {
+                playerStateMachine.ToggleWeaponHitbox(false);
+            }
+
             
             if (!playerStateMachine.characterController.isGrounded){
                 SwitchToFallState();
             }
+            
             
             ApplyGravity();
             // push player forward on last string of attack
@@ -47,6 +63,7 @@ namespace FSM.Action{
 
         public override void Exit()
         {
+            playerStateMachine.ToggleWeaponHitbox(false);
             playerStateMachine.animator.SetFloat(animMultiplier,1f);
         }
     }

@@ -129,8 +129,8 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    percentTimeOfStartHitbox: 0.4
-    percentTimeOfEndHitbox: 0.5
+    percentTimeOfStartHitbox: 0.6
+    percentTimeOfEndHitbox: 0.8333333
   - anim: {fileID: -203655887218126122, guid: 2b581f983db6a3e42a539cc61bd83ec6, type: 3}
     curve:
       serializedVersion: 2
@@ -165,8 +165,8 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    percentTimeOfStartHitbox: 0.47
-    percentTimeOfEndHitbox: 0.55
+    percentTimeOfStartHitbox: 0.6666667
+    percentTimeOfEndHitbox: 1
   - anim: {fileID: -203655887218126122, guid: 70248e758a2536f468c65f0b89c0c2db, type: 3}
     curve:
       serializedVersion: 2
@@ -201,8 +201,8 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    percentTimeOfStartHitbox: 0.54
-    percentTimeOfEndHitbox: 0.59
+    percentTimeOfStartHitbox: 1.25
+    percentTimeOfEndHitbox: 1.5
   - anim: {fileID: -203655887218126122, guid: ce82d13900a50ad4aa98cc82a7c38066, type: 3}
     curve:
       serializedVersion: 2
@@ -246,8 +246,8 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    percentTimeOfStartHitbox: 0.43
-    percentTimeOfEndHitbox: 0.55
+    percentTimeOfStartHitbox: 0.7
+    percentTimeOfEndHitbox: 1
   - anim: {fileID: -203655887218126122, guid: 47dbe6462691896479dea99c138efe3b, type: 3}
     curve:
       serializedVersion: 2
@@ -291,8 +291,8 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    percentTimeOfStartHitbox: 0.42
-    percentTimeOfEndHitbox: 0.55
+    percentTimeOfStartHitbox: 0.55
+    percentTimeOfEndHitbox: 0.8333333
   - anim: {fileID: 7400000, guid: f0a1d048235da424c8b61620a5ed638e, type: 2}
     curve:
       serializedVersion: 2
