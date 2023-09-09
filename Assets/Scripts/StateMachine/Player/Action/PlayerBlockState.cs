@@ -38,7 +38,7 @@ namespace FSM.Action{
             }
 
             ApplyGravity();
-            FaceTargetDirection(playerStateMachine.lockOnTarget);
+            FaceTargetDirection();
             Move();
         }
 

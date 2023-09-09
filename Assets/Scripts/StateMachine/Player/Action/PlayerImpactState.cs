@@ -6,7 +6,7 @@ namespace FSM.Action{
     public class PlayerImpactState : PlayerBaseState
     {
         protected readonly int impactHash = Animator.StringToHash("Unblocked Impact");
-        private const float crossFadeDuration = .1f;
+        private const float crossFadeDuration = 0f;
         private const float waitTime = 1.1f;
         private float elapsed = 0f;
         public PlayerImpactState(PlayerStateMachine playerStateMachine) : base(playerStateMachine)

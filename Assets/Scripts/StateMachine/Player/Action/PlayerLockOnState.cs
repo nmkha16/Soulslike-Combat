@@ -44,7 +44,7 @@ namespace FSM.Action{
 
             ApplyGravity();
             CalculateMoveDirection(deltaLockOnSpeedReductionMultiplier);
-            FaceTargetDirection(playerStateMachine.lockOnTarget);
+            FaceTargetDirection();
             Move();
 
             playerStateMachine.animator.SetFloat(moveXHash, playerStateMachine.inputReader.moveComposite.x,animationDampTime,Time.deltaTime);

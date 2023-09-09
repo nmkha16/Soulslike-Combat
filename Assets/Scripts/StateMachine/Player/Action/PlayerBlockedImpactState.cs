@@ -28,7 +28,7 @@ namespace FSM.Action{
                 SwitchToFallState();
             }
 
-            FaceTargetDirection(playerStateMachine.lockOnTarget);
+            FaceTargetDirection();
 
             if (elapsed > waitTime){
                 SwitchToBlockState();

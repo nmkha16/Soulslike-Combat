@@ -56,7 +56,7 @@ namespace FSM.Action{
 
 
             CalculateMoveDirection(elapsed, curve, easing: easingCurve);
-            FaceMoveDirection();
+            FaceTargetDirectionImmediately();
             Move();
 
             if (shouldEnterNextAttack && elapsed > animLength * 0.75f){
@@ -65,7 +65,7 @@ namespace FSM.Action{
             }
 
             if (elapsed > animLength){
-                if (playerStateMachine.inputReader.isLockedOnTarget){
+                if (playerStateMachine.isLockedOnTarget){
                     SwitchToLockOnState();
                     return;
                 }

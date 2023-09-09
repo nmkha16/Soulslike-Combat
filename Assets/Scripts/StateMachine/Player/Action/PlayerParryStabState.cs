@@ -43,7 +43,7 @@ namespace FSM.Action{
                 }
                 SwitchToMoveState();
             }
-            FaceTargetDirection(playerStateMachine.lockOnTarget);
+            FaceTargetDirection();
         }
 
         public override void Exit()

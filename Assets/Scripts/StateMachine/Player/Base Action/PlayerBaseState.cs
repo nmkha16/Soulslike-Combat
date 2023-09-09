@@ -53,10 +53,16 @@ namespace FSM.Action{
             playerStateMachine.transform.rotation = Quaternion.Slerp(playerStateMachine.transform.rotation,Quaternion.LookRotation(faceDirection),playerStateMachine.lookRotationDampFactor * Time.deltaTime);
         }
 
-        protected void FaceTargetDirection(Transform target){
-            if (target == null) return;
-            Vector3 dir = target.position - playerStateMachine.transform.position;
+        protected void FaceTargetDirection(){
+            if (playerStateMachine.lockOnTarget == null) return;
+            Vector3 dir = playerStateMachine.lockOnTarget.position - playerStateMachine.transform.position;
             playerStateMachine.transform.rotation = Quaternion.Slerp(playerStateMachine.transform.rotation,Quaternion.LookRotation(dir),playerStateMachine.lookRotationDampFactor * Time.deltaTime);
+        }
+
+        protected void FaceTargetDirectionImmediately(){
+            if (playerStateMachine.lockOnTarget == null) return;
+            Vector3 dir = playerStateMachine.lockOnTarget.position - playerStateMachine.transform.position;
+            playerStateMachine.transform.rotation = Quaternion.LookRotation(dir);
         }
 
         protected void ApplyGravity(){

@@ -57,7 +57,7 @@ namespace FSM.Action{
             Move();
 
             if (elapsed > animLength){
-                playerStateMachine.SwitchState(new PlayerMoveState(playerStateMachine));
+                SwitchToMoveState();
             }
         }
 

@@ -51,11 +51,11 @@ namespace FSM.Action{
 
             ApplyGravity();
             CalculateMoveDirection(elapsed,curve, easing: easingCurve);
-            FaceMoveDirection();
+            FaceTargetDirectionImmediately();
             Move();
 
             if (elapsed > animLength){
-                if (playerStateMachine.inputReader.isLockedOnTarget){
+                if (playerStateMachine.isLockedOnTarget){
                     SwitchToLockOnState();
                     return;
                 }
